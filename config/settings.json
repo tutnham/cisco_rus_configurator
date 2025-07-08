@@ -1,0 +1,58 @@
+{
+  "application": {
+    "name": "Cisco Translator",
+    "version": "1.0.0",
+    "author": "Cisco Translator Team",
+    "description": "Desktop application for Cisco CLI commands with Russian translation interface"
+  },
+  "ui": {
+    "theme": "light",
+    "window_geometry": "1200x800",
+    "auto_save_layout": true,
+    "show_tooltips": true,
+    "font_family": "Consolas",
+    "font_size": 10
+  },
+  "connection": {
+    "default_ssh_port": 22,
+    "default_telnet_port": 23,
+    "connection_timeout": 10,
+    "command_timeout": 30,
+    "auto_disable_paging": true,
+    "save_credentials": false
+  },
+  "logging": {
+    "log_level": "INFO",
+    "max_log_size_mb": 10,
+    "log_retention_days": 30,
+    "enable_session_logging": true,
+    "enable_debug_logging": false
+  },
+  "security": {
+    "encrypt_stored_passwords": true,
+    "clear_password_on_exit": false,
+    "session_timeout_minutes": 60,
+    "require_confirmation_for_destructive_commands": true
+  },
+  "features": {
+    "enable_macros": true,
+    "enable_command_history": true,
+    "enable_auto_complete": true,
+    "enable_syntax_highlighting": false,
+    "max_history_entries": 1000
+  },
+  "export": {
+    "default_format": "txt",
+    "include_timestamps": true,
+    "include_command_descriptions": true,
+    "default_export_path": "exports"
+  },
+  "advanced": {
+    "enable_telnet": true,
+    "enable_com_port": true,
+    "buffer_size": 4096,
+    "max_concurrent_connections": 1,
+    "enable_keep_alive": true,
+    "keep_alive_interval": 30
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "show_commands": {
+    "name": "Команды отображения (Show)",
+    "description": "Команды для просмотра информации об устройстве",
+    "commands": [
+      {
+        "command": "show version",
+        "description": "Показать версию ПО и информацию об устройстве",
+        "category": "show_commands"
+      },
+      {
+        "command": "show running-config",
+        "description": "Показать текущую конфигурацию",
+        "category": "show_commands"
+      },
+      {
+        "command": "show ip interface brief",
+        "description": "Показать краткую информацию об IP интерфейсах",
+        "category": "show_commands"
+      },
+      {
+        "command": "show interfaces",
+        "description": "Показать состояние всех интерфейсов",
+        "category": "show_commands"
+      },
+      {
+        "command": "show ip route",
+        "description": "Показать таблицу маршрутизации",
+        "category": "show_commands"
+      },
+      {
+        "command": "show arp",
+        "description": "Показать ARP таблицу",
+        "category": "show_commands"
+      },
+      {
+        "command": "show mac address-table",
+        "description": "Показать таблицу MAC адресов",
+        "category": "show_commands"
+      },
+      {
+        "command": "show vlan",
+        "description": "Показать информацию о VLAN",
+        "category": "show_commands"
+      }
+    ]
+  },
+  "interface_config": {
+    "name": "Настройка интерфейсов",
+    "description": "Команды для настройки сетевых интерфейсов",
+    "commands": [
+      {
+        "command": "configure terminal",
+        "description": "Войти в режим глобальной конфигурации",
+        "category": "interface_config"
+      },
+      {
+        "command": "interface GigabitEthernet0/0",
+        "description": "Войти в настройку интерфейса GigabitEthernet0/0",
+        "category": "interface_config"
+      },
+      {
+        "command": "ip address 192.168.1.1 255.255.255.0",
+        "description": "Назначить IP адрес интерфейсу",
+        "category": "interface_config"
+      },
+      {
+        "command": "no shutdown",
+        "description": "Включить интерфейс",
+        "category": "interface_config"
+      },
+      {
+        "command": "shutdown",
+        "description": "Выключить интерфейс",
+        "category": "interface_config"
+      },
+      {
+        "command": "description CONNECTION_TO_ROUTER",
+        "description": "Добавить описание интерфейса",
+        "category": "interface_config"
+      },
+      {
+        "command": "duplex full",
+        "description": "Установить полный дуплекс",
+        "category": "interface_config"
+      },
+      {
+        "command": "speed 100",
+        "description": "Установить скорость 100 Мбит/с",
+        "category": "interface_config"
+      }
+    ]
+  },
+  "routing": {
+    "name": "Маршрутизация",
+    "description": "Команды для настройки маршрутизации",
+    "commands": [
+      {
+        "command": "ip route 0.0.0.0 0.0.0.0 192.168.1.1",
+        "description": "Добавить маршрут по умолчанию",
+        "category": "routing"
+      },
+      {
+        "command": "router ospf 1",
+        "description": "Настроить OSPF процесс 1",
+        "category": "routing"
+      },
+      {
+        "command": "router eigrp 100",
+        "description": "Настроить EIGRP процесс 100",
+        "category": "routing"
+      },
+      {
+        "command": "network 192.168.1.0 0.0.0.255 area 0",
+        "description": "Объявить сеть в OSPF area 0",
+        "category": "routing"
+      },
+      {
+        "command": "redistribute connected",
+        "description": "Перераспределить подключенные маршруты",
+        "category": "routing"
+      },
+      {
+        "command": "show ip protocols",
+        "description": "Показать протоколы маршрутизации",
+        "category": "routing"
+      }
+    ]
+  },
+  "security": {
+    "name": "Безопасность",
+    "description": "Команды для настройки безопасности",
+    "commands": [
+      {
+        "command": "username admin privilege 15 secret cisco123",
+        "description": "Создать пользователя admin с привилегиями",
+        "category": "security"
+      },
+      {
+        "command": "enable secret cisco123",
+        "description": "Установить пароль привилегированного режима",
+        "category": "security"
+      },
+      {
+        "command": "service password-encryption",
+        "description": "Включить шифрование паролей",
+        "category": "security"
+      },
+      {
+        "command": "access-list 1 permit 192.168.1.0 0.0.0.255",
+        "description": "Создать ACL для разрешения сети",
+        "category": "security"
+      },
+      {
+        "command": "banner motd # Unauthorized access prohibited #",
+        "description": "Установить баннер при входе",
+        "category": "security"
+      },
+      {
+        "command": "line vty 0 4",
+        "description": "Настроить виртуальные терминалы",
+        "category": "security"
+      },
+      {
+        "command": "transport input ssh",
+        "description": "Разрешить только SSH подключения",
+        "category": "security"
+      }
+    ]
+  },
+  "diagnostics": {
+    "name": "Диагностика",
+    "description": "Команды для диагностики и устранения неисправностей",
+    "commands": [
+      {
+        "command": "ping 8.8.8.8",
+        "description": "Проверить связность с 8.8.8.8",
+        "category": "diagnostics"
+      },
+      {
+        "command": "traceroute 8.8.8.8",
+        "description": "Проследить маршрут до 8.8.8.8",
+        "category": "diagnostics"
+      },
+      {
+        "command": "show logging",
+        "description": "Показать системные логи",
+        "category": "diagnostics"
+      },
+      {
+        "command": "show processes cpu",
+        "description": "Показать использование CPU",
+        "category": "diagnostics"
+      },
+      {
+        "command": "show memory",
+        "description": "Показать использование памяти",
+        "category": "diagnostics"
+      },
+      {
+        "command": "debug ip packet",
+        "description": "Включить отладку IP пакетов",
+        "category": "diagnostics"
+      },
+      {
+        "command": "undebug all",
+        "description": "Выключить всю отладку",
+        "category": "diagnostics"
+      },
+      {
+        "command": "show tech-support",
+        "description": "Собрать техническую информацию",
+        "category": "diagnostics"
+      }
+    ]
+  },
+  "device_management": {
+    "name": "Управление устройством",
+    "description": "Команды для управления устройством",
+    "commands": [
+      {
+        "command": "copy running-config startup-config",
+        "description": "Сохранить конфигурацию",
+        "category": "device_management"
+      },
+      {
+        "command": "erase startup-config",
+        "description": "Очистить сохраненную конфигурацию",
+        "category": "device_management"
+      },
+      {
+        "command": "reload",
+        "description": "Перезагрузить устройство",
+        "category": "device_management"
+      },
+      {
+        "command": "clock set 14:30:00 15 Dec 2023",
+        "description": "Установить дату и время",
+        "category": "device_management"
+      },
+      {
+        "command": "hostname Router1",
+        "description": "Установить имя устройства",
+        "category": "device_management"
+      },
+      {
+        "command": "copy tftp running-config",
+        "description": "Загрузить конфигурацию по TFTP",
+        "category": "device_management"
+      },
+      {
+        "command": "show flash",
+        "description": "Показать содержимое flash памяти",
+        "category": "device_management"
+      }
+    ]
+  }
+}
