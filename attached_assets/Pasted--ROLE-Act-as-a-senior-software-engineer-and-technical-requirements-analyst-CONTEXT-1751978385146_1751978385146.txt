@@ -1,0 +1,126 @@
+### ROLE ###
+
+Act as a senior software engineer and technical requirements analyst.
+
+### CONTEXT ###
+
+Background: The project "Cisco Translator" aims to develop a software application that facilitates the use of Cisco CLI commands through a user-friendly interface with Russian translation.
+
+Key Information: The application will connect to Cisco network devices via SSH, Telnet, or COM port, provide a list of available commands in Russian, allow users to select and execute commands, and support frequently used command groups (macros).
+
+### TASK ###
+
+Your primary task is to generate a detailed and structured specification document for the "Cisco Translator" project based on the provided requirements.
+
+Follow these steps precisely:
+
+1. Review the project description, target audience, and functional requirements.
+2. Organize the requirements into categories (e.g., supported connections, user interface, command database, command execution, macros, logs, and non-functional requirements).
+3. Create a comprehensive and unambiguous specification document.
+
+### EXAMPLES ###
+
+Example 1:
+Input: User story for command execution
+Rationale: The system should allow users to select a command from the list and automatically send it to the device.
+Output: "The application shall provide a list of available commands in Russian. Upon user selection, the corresponding English command shall be sent to the device."
+
+### CONSTRAINTS ###
+
+- Tone: Formal and technical
+- Style: Clear and concise
+- Length: Comprehensive coverage of all requirements
+- Do Not: Include any implementation details or design decisions.
+
+### OUTPUT FORMAT ###
+
+Provide the final output exclusively in the following format:
+
+# Cisco Translator Specification Document
+
+## 1. Introduction
+
+### 1.1 Project Overview
+- **Project Name:** Cisco Translator
+- **Objective:** Develop a software application that enables users to interact with Cisco network devices using CLI commands translated into Russian.
+
+### 1.2 Target Audience
+- Students studying Cisco (e.g., CCNA program)
+- Junior network engineers
+- Users with limited English proficiency who want to work with Cisco devices
+
+## 2. Functional Requirements
+
+### 2.1 Supported Connections
+- **SSH:** Support for SSH connections to Cisco devices.
+- **Telnet:** Support for Telnet connections to Cisco devices.
+- **COM Port:** Support for connections via COM port (RS232/USB-to-Serial).
+
+### 2.2 Connection Formats
+- **For SSH/Telnet:**
+  - Device IP address
+  - Username
+  - Password
+  - Port (default: 22 for SSH, 23 for Telnet)
+- **For COM Port:**
+  - Port selection (e.g., COM3, /dev/ttyUSB0)
+  - Baud rate settings (e.g., 9600, 115200)
+
+### 2.3 User Interface
+- **Graphical Interface (GUI):** Provide a user-friendly GUI.
+- **Connection Type Selection:** Allow users to select the type of connection.
+- **Connection Status Display:** Display the current connection status.
+- **Output Field:** Show the result of command execution.
+- **Disconnect Button:** Provide a button to disconnect from the device.
+
+### 2.4 Command Database
+- **JSON Format:** Store commands in JSON format.
+- **Russian Descriptions + English Commands:** Include Russian descriptions and corresponding English commands.
+- **Command Categories:**
+  - Information display mode (show)
+  - Interface configuration
+  - Routing
+  - Security
+  - Diagnostics
+  - Device management
+
+### 2.5 Command Execution
+- **Automatic Command Sending:** Send the selected command to the device automatically.
+- **Command Output Display:** Display the result of command execution in the application window.
+- **Repeat Last Command:** Allow users to repeat the last command execution.
+
+### 2.6 Macros (Command Groups)
+- **Save Frequently Used Commands:** Allow users to save frequently used command sets.
+- **Macro Examples:**
+  - basic_info: Display firmware version and interface list.
+  - configure_interface: Enter configuration mode and set IP.
+- **Macro Execution:** Execute macros with a single button click.
+- **Macro Editing and Deletion:** Allow users to edit and delete macros.
+
+### 2.7 Logs and History
+- **Command History:** Save the history of executed commands.
+- **Log Export:** Allow users to export logs to .txt or .log files.
+
+## 3. Non-Functional Requirements
+
+### 3.1 Performance
+- **Connection Establishment:** Establish a connection within 5 seconds.
+- **Command Execution Delay:** Limit the delay between sending a command and receiving a response to 3 seconds.
+
+### 3.2 Compatibility
+- **Operating Systems:** Support Windows, Linux, macOS.
+- **Device Compatibility:** Work with Cisco IOS, Catalyst, ISR, ASA (within SSH/Telnet/Serial protocols).
+
+### 3.3 Security
+- **Password Storage:** Store passwords securely (e.g., encrypted).
+- **Data Storage:** Use secure data storage practices.
+
+### 3.4 Usability
+- **User-Friendly Interface:** Design a simple and intuitive interface.
+- **Minimal Clicks:** Minimize the number of clicks required to execute commands.
+- **Theme Support:** Support dark/light themes.
+- **Extensibility:** Allow for the addition of new command categories and support for other manufacturers (e.g., Juniper, Huawei).
+
+## 4. Conclusion
+
+This specification document outlines the requirements for the "Cisco Translator" project, ensuring that the developed application meets the needs of its target audience and provides the required functionality, performance, and security.
