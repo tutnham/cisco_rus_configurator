@@ -196,6 +196,146 @@ def get_status():
         'session_id': session.get('session_id')
     })
 
+@app.route('/api/add_command', methods=['POST'])
+def add_command():
+    """Add a new command"""
+    try:
+        data = request.json
+        category = data['category']
+        command = data['command']
+        description = data['description']
+        
+        # Add command to the manager
+        command_manager.add_command(category, command, description)
+        
+        return jsonify({
+            'success': True,
+            'message': f'Команда "{description}" добавлена в категорию "{category}"'
+        })
+        
+    except Exception as e:
+        logger.error(f"Error adding command: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/remove_command', methods=['POST'])
+def remove_command():
+    """Remove a command"""
+    try:
+        data = request.json
+        category = data['category']
+        command = data['command']
+        
+        # Remove command from the manager
+        command_manager.remove_command(category, command)
+        
+        return jsonify({
+            'success': True,
+            'message': f'Команда "{command}" удалена из категории "{category}"'
+        })
+        
+    except Exception as e:
+        logger.error(f"Error removing command: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/add_macro', methods=['POST'])
+def add_macro():
+    """Add a new macro"""
+    try:
+        data = request.json
+        name = data['name']
+        description = data['description']
+        commands = data['commands']
+        author = data.get('author', 'user')
+        
+        # Add macro to the manager
+        success = macro_manager.create_macro(name, description, commands, author)
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': f'Макрос "{name}" создан успешно'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': f'Макрос с именем "{name}" уже существует'
+            })
+        
+    except Exception as e:
+        logger.error(f"Error adding macro: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/update_macro', methods=['POST'])
+def update_macro():
+    """Update an existing macro"""
+    try:
+        data = request.json
+        name = data['name']
+        description = data.get('description')
+        commands = data.get('commands')
+        
+        # Update macro
+        success = macro_manager.update_macro(name, description, commands)
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': f'Макрос "{name}" обновлен успешно'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': f'Макрос "{name}" не найден'
+            })
+        
+    except Exception as e:
+        logger.error(f"Error updating macro: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/delete_macro', methods=['POST'])
+def delete_macro():
+    """Delete a macro"""
+    try:
+        data = request.json
+        name = data['name']
+        
+        # Delete macro
+        success = macro_manager.delete_macro(name)
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': f'Макрос "{name}" удален успешно'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': f'Макрос "{name}" не найден'
+            })
+        
+    except Exception as e:
+        logger.error(f"Error deleting macro: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/search_commands', methods=['POST'])
+def search_commands():
+    """Search commands"""
+    try:
+        data = request.json
+        search_term = data['search_term']
+        
+        # Search commands
+        results = command_manager.search_commands(search_term)
+        
+        return jsonify({
+            'success': True,
+            'results': results
+        })
+        
+    except Exception as e:
+        logger.error(f"Error searching commands: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
 if __name__ == '__main__':
     # Create templates directory if it doesn't exist
     if not os.path.exists('templates'):

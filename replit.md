@@ -133,6 +133,7 @@ cisco_translator/
 ```
 Changelog:
 - July 08, 2025. Initial setup
+- July 09, 2025. Added web interface with custom command and macro management
 ```
 
 ## User Preferences

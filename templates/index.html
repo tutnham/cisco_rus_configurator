@@ -267,6 +267,115 @@
             margin-bottom: 15px;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+        }
+
+        .command-list-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .command-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .command-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .command-input button {
+            padding: 8px 12px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .command-input button:hover {
+            background: #c0392b;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .management-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -274,6 +383,16 @@
             
             .container {
                 padding: 10px;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+
+            .management-buttons {
+                flex-direction: column;
             }
         }
     </style>
@@ -315,6 +434,15 @@
             <div class="left-panel">
                 <div class="section-title">Доступные команды</div>
                 
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Поиск команд...">
+                </div>
+
+                <div class="management-buttons">
+                    <button id="addCommandBtn" class="btn btn-small">Добавить команду</button>
+                    <button id="removeCommandBtn" class="btn btn-small danger" disabled>Удалить команду</button>
+                </div>
+                
                 <div class="form-group">
                     <label for="categorySelect">Категория:</label>
                     <select id="categorySelect">
@@ -332,6 +460,12 @@
             <div class="right-panel">
                 <div class="section-title">Макросы</div>
                 
+                <div class="management-buttons">
+                    <button id="addMacroBtn" class="btn btn-small">Создать макрос</button>
+                    <button id="editMacroBtn" class="btn btn-small" disabled>Редактировать</button>
+                    <button id="deleteMacroBtn" class="btn btn-small danger" disabled>Удалить</button>
+                </div>
+
                 <div id="macroList" class="macro-list">
                     <div class="loading">Загрузка макросов...</div>
                 </div>
@@ -346,11 +480,67 @@
         </div>
     </div>
 
+    <!-- Modal for adding commands -->
+    <div id="addCommandModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Добавить команду</h2>
+                <span class="close" onclick="closeModal('addCommandModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="commandCategory">Категория:</label>
+                <select id="commandCategory">
+                    <option value="">Выберите категорию</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="commandText">Команда:</label>
+                <input type="text" id="commandText" placeholder="show version" required>
+            </div>
+            <div class="form-group">
+                <label for="commandDescription">Описание (на русском):</label>
+                <input type="text" id="commandDescription" placeholder="Показать версию устройства" required>
+            </div>
+            <button id="saveCommandBtn" class="btn">Сохранить команду</button>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing macros -->
+    <div id="macroModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="macroModalTitle" class="modal-title">Создать макрос</h2>
+                <span class="close" onclick="closeModal('macroModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="macroName">Название макроса:</label>
+                <input type="text" id="macroName" placeholder="Базовая диагностика" required>
+            </div>
+            <div class="form-group">
+                <label for="macroDescription">Описание:</label>
+                <input type="text" id="macroDescription" placeholder="Выполняет базовую диагностику устройства" required>
+            </div>
+            <div class="form-group">
+                <label>Команды макроса:</label>
+                <div id="macroCommands" class="command-list-container">
+                    <!-- Commands will be added here dynamically -->
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="text" id="newMacroCommand" placeholder="Введите команду" style="flex: 1;">
+                    <button id="addMacroCommandBtn" class="btn btn-small">Добавить</button>
+                </div>
+            </div>
+            <button id="saveMacroBtn" class="btn">Сохранить макрос</button>
+        </div>
+    </div>
+
     <script>
         // Global variables
         let selectedCommand = null;
         let selectedMacro = null;
         let connected = false;
+        let currentMacroCommands = [];
+        let editingMacro = null;
 
         // DOM elements
         const statusDiv = document.getElementById('status');
@@ -362,6 +552,12 @@
         const macroList = document.getElementById('macroList');
         const executeMacroBtn = document.getElementById('executeMacroBtn');
         const output = document.getElementById('output');
+        const searchInput = document.getElementById('searchInput');
+        const addCommandBtn = document.getElementById('addCommandBtn');
+        const removeCommandBtn = document.getElementById('removeCommandBtn');
+        const addMacroBtn = document.getElementById('addMacroBtn');
+        const editMacroBtn = document.getElementById('editMacroBtn');
+        const deleteMacroBtn = document.getElementById('deleteMacroBtn');
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
@@ -376,6 +572,15 @@
         categorySelect.addEventListener('change', loadCommands);
         executeBtn.addEventListener('click', executeCommand);
         executeMacroBtn.addEventListener('click', executeMacro);
+        searchInput.addEventListener('input', searchCommands);
+        addCommandBtn.addEventListener('click', () => openAddCommandModal());
+        removeCommandBtn.addEventListener('click', removeSelectedCommand);
+        addMacroBtn.addEventListener('click', () => openMacroModal());
+        editMacroBtn.addEventListener('click', () => openMacroModal(true));
+        deleteMacroBtn.addEventListener('click', deleteSelectedMacro);
+        document.getElementById('saveCommandBtn').addEventListener('click', saveCommand);
+        document.getElementById('saveMacroBtn').addEventListener('click', saveMacro);
+        document.getElementById('addMacroCommandBtn').addEventListener('click', addMacroCommand);
 
         // Load categories
         function loadCategories() {
@@ -469,6 +674,7 @@
             element.classList.add('selected');
             selectedCommand = command;
             executeBtn.disabled = !connected;
+            removeCommandBtn.disabled = false;
         }
 
         // Select macro
@@ -482,6 +688,8 @@
             element.classList.add('selected');
             selectedMacro = {key: key, macro: macro};
             executeMacroBtn.disabled = !connected;
+            editMacroBtn.disabled = false;
+            deleteMacroBtn.disabled = false;
         }
 
         // Connect to device
@@ -675,6 +883,296 @@
         // Show error message
         function showError(message) {
             addToOutput(`ОШИБКА: ${message}`);
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Search commands
+        function searchCommands() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm.length < 2) {
+                loadCommands(); // Show category commands if search is too short
+                return;
+            }
+
+            fetch('/api/search_commands', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    search_term: searchTerm
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    commandList.innerHTML = '';
+                    if (data.results.length === 0) {
+                        commandList.innerHTML = '<div class="loading">Команды не найдены</div>';
+                    } else {
+                        data.results.forEach(command => {
+                            const div = document.createElement('div');
+                            div.className = 'command-item';
+                            div.textContent = command.description;
+                            div.dataset.command = command.command;
+                            div.dataset.category = command.category;
+                            div.addEventListener('click', () => selectCommand(div, command));
+                            commandList.appendChild(div);
+                        });
+                    }
+                } else {
+                    showError('Ошибка поиска: ' + data.error);
+                }
+            })
+            .catch(error => {
+                showError('Ошибка поиска: ' + error.message);
+            });
+        }
+
+        // Open add command modal
+        function openAddCommandModal() {
+            // Populate categories in modal
+            const commandCategory = document.getElementById('commandCategory');
+            commandCategory.innerHTML = '<option value="">Выберите категорию</option>';
+            
+            fetch('/api/categories')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        data.categories.forEach(category => {
+                            const option = document.createElement('option');
+                            option.value = category;
+                            option.textContent = category;
+                            commandCategory.appendChild(option);
+                        });
+                    }
+                });
+
+            // Clear form
+            document.getElementById('commandText').value = '';
+            document.getElementById('commandDescription').value = '';
+            
+            openModal('addCommandModal');
+        }
+
+        // Save command
+        function saveCommand() {
+            const category = document.getElementById('commandCategory').value;
+            const command = document.getElementById('commandText').value.trim();
+            const description = document.getElementById('commandDescription').value.trim();
+
+            if (!category || !command || !description) {
+                showError('Заполните все поля');
+                return;
+            }
+
+            fetch('/api/add_command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    category: category,
+                    command: command,
+                    description: description
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
+                    closeModal('addCommandModal');
+                    if (categorySelect.value === category) {
+                        loadCommands(); // Reload commands if same category is selected
+                    }
+                } else {
+                    showError(data.error);
+                }
+            })
+            .catch(error => {
+                showError('Ошибка добавления команды: ' + error.message);
+            });
+        }
+
+        // Remove selected command
+        function removeSelectedCommand() {
+            if (!selectedCommand) {
+                showError('Выберите команду для удаления');
+                return;
+            }
+
+            if (confirm(`Удалить команду "${selectedCommand.description}"?`)) {
+                const category = selectedCommand.category || categorySelect.value;
+                
+                fetch('/api/remove_command', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        category: category,
+                        command: selectedCommand.command
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
+                        selectedCommand = null;
+                        removeCommandBtn.disabled = true;
+                        executeBtn.disabled = true;
+                        loadCommands(); // Reload commands
+                    } else {
+                        showError(data.error);
+                    }
+                })
+                .catch(error => {
+                    showError('Ошибка удаления команды: ' + error.message);
+                });
+            }
+        }
+
+        // Open macro modal
+        function openMacroModal(isEdit = false) {
+            editingMacro = isEdit ? selectedMacro : null;
+            currentMacroCommands = [];
+
+            if (isEdit && selectedMacro) {
+                document.getElementById('macroModalTitle').textContent = 'Редактировать макрос';
+                document.getElementById('macroName').value = selectedMacro.macro.name;
+                document.getElementById('macroDescription').value = selectedMacro.macro.description;
+                currentMacroCommands = [...selectedMacro.macro.commands];
+            } else {
+                document.getElementById('macroModalTitle').textContent = 'Создать макрос';
+                document.getElementById('macroName').value = '';
+                document.getElementById('macroDescription').value = '';
+                currentMacroCommands = [];
+            }
+
+            updateMacroCommandsList();
+            openModal('macroModal');
+        }
+
+        // Add command to macro
+        function addMacroCommand() {
+            const commandInput = document.getElementById('newMacroCommand');
+            const command = commandInput.value.trim();
+            
+            if (command) {
+                currentMacroCommands.push(command);
+                commandInput.value = '';
+                updateMacroCommandsList();
+            }
+        }
+
+        // Update macro commands list
+        function updateMacroCommandsList() {
+            const container = document.getElementById('macroCommands');
+            container.innerHTML = '';
+
+            currentMacroCommands.forEach((command, index) => {
+                const div = document.createElement('div');
+                div.className = 'command-input';
+                div.innerHTML = `
+                    <input type="text" value="${command}" onchange="updateMacroCommand(${index}, this.value)">
+                    <button onclick="removeMacroCommand(${index})">Удалить</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Update macro command
+        function updateMacroCommand(index, newValue) {
+            currentMacroCommands[index] = newValue;
+        }
+
+        // Remove macro command
+        function removeMacroCommand(index) {
+            currentMacroCommands.splice(index, 1);
+            updateMacroCommandsList();
+        }
+
+        // Save macro
+        function saveMacro() {
+            const name = document.getElementById('macroName').value.trim();
+            const description = document.getElementById('macroDescription').value.trim();
+
+            if (!name || !description || currentMacroCommands.length === 0) {
+                showError('Заполните все поля и добавьте хотя бы одну команду');
+                return;
+            }
+
+            const endpoint = editingMacro ? '/api/update_macro' : '/api/add_macro';
+            const requestData = {
+                name: name,
+                description: description,
+                commands: currentMacroCommands
+            };
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
+                    closeModal('macroModal');
+                    loadMacros(); // Reload macros
+                } else {
+                    showError(data.error);
+                }
+            })
+            .catch(error => {
+                showError('Ошибка сохранения макроса: ' + error.message);
+            });
+        }
+
+        // Delete selected macro
+        function deleteSelectedMacro() {
+            if (!selectedMacro) {
+                showError('Выберите макрос для удаления');
+                return;
+            }
+
+            if (confirm(`Удалить макрос "${selectedMacro.macro.name}"?`)) {
+                fetch('/api/delete_macro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: selectedMacro.key
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
+                        selectedMacro = null;
+                        editMacroBtn.disabled = true;
+                        deleteMacroBtn.disabled = true;
+                        executeMacroBtn.disabled = true;
+                        loadMacros(); // Reload macros
+                    } else {
+                        showError(data.error);
+                    }
+                })
+                .catch(error => {
+                    showError('Ошибка удаления макроса: ' + error.message);
+                });
+            }
         }
     </script>
 </body>
