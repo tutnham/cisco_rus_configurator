@@ -398,4 +398,143 @@
       }
     ]
   }
+  "mpls": {
+    "name": "MPLS (Multiprotocol Label Switching)",
+    "description": "Команды для настройки MPLS",
+    "commands": [
+      {
+        "command": "mpls ip",
+        "description": "Включить MPLS на маршрутизаторе",
+        "category": "mpls"
+      },
+      {
+        "command": "interface GigabitEthernet0/0",
+        "description": "Выбрать интерфейс для настройки MPLS",
+        "category": "mpls"
+      },
+      {
+        "command": "mpls ip",
+        "description": "Включить MPLS на интерфейсе",
+        "category": "mpls"
+      },
+      {
+        "command": "mpls label protocol ldp",
+        "description": "Настроить LDP как протокол меток",
+        "category": "mpls"
+      },
+      {
+        "command": "mpls ldp router-id Loopback0 force",
+        "description": "Установить Loopback0 как ID маршрутизатора LDP",
+        "category": "mpls"
+      },
+      {
+        "command": "show mpls ldp bindings",
+        "description": "Показать привязки меток LDP",
+        "category": "mpls"
+      },
+      {
+        "command": "show mpls interfaces",
+        "description": "Показать интерфейсы с включенным MPLS",
+        "category": "mpls"
+      }
+    ]
+  },
+  "bgp": {
+    "name": "BGP (Border Gateway Protocol)",
+    "description": "Команды для настройки BGP",
+    "commands": [
+      {
+        "command": "router bgp 65001",
+        "description": "Создать процесс BGP с AS номером 65001",
+        "category": "bgp"
+      },
+      {
+        "command": "neighbor 192.168.1.2 remote-as 65002",
+        "description": "Настроить соседа BGP с удаленным AS",
+        "category": "bgp"
+      },
+      {
+        "command": "network 192.168.1.0 mask 255.255.255.0",
+        "description": "Объявить сеть в BGP",
+        "category": "bgp"
+      },
+      {
+        "command": "address-family ipv4",
+        "description": "Перейти в режим настройки IPv4 адрес-семейства",
+        "category": "bgp"
+      },
+      {
+        "command": "neighbor 192.168.1.2 activate",
+        "description": "Активировать соседа в адрес-семействе",
+        "category": "bgp"
+      },
+      {
+        "command": "neighbor 192.168.1.2 route-map OUT out",
+        "description": "Применить route-map для исходящего трафика",
+        "category": "bgp"
+      },
+      {
+        "command": "show ip bgp summary",
+        "description": "Показать сводку BGP",
+        "category": "bgp"
+      },
+      {
+        "command": "show ip bgp neighbors",
+        "description": "Показать детали о соседях BGP",
+        "category": "bgp"
+      }
+    ]
+  },
+  "multicast": {
+    "name": "Multicast",
+    "description": "Команды для настройки Multicast",
+    "commands": [
+      {
+        "command": "ip multicast-routing",
+        "description": "Включить маршрутизацию Multicast",
+        "category": "multicast"
+      },
+      {
+        "command": "interface GigabitEthernet0/0",
+        "description": "Выбрать интерфейс для настройки Multicast",
+        "category": "multicast"
+      },
+      {
+        "command": "ip pim sparse-mode",
+        "description": "Включить PIM Sparse Mode на интерфейсе",
+        "category": "multicast"
+      },
+      {
+        "command": "ip igmp join-group 239.1.1.1",
+        "description": "Присоединиться к Multicast группе",
+        "category": "multicast"
+      },
+      {
+        "command": "ip pim rp-address 192.168.1.1",
+        "description": "Настроить RP (Rendezvous Point) адрес",
+        "category": "multicast"
+      },
+      {
+        "command": "show ip pim neighbor",
+        "description": "Показать соседей PIM",
+        "category": "multicast"
+      },
+      {
+        "command": "show ip mroute",
+        "description": "Показать Multicast маршруты",
+        "category": "multicast"
+      }
+    ]
+  },
+  "vlan_config": {
+    "name": "Настройка VLAN",
+    "description": "Команды для создания и управления VLAN",
+    "commands": [
+      {
+        "command": "vlan 10",
+        "description": "Создать VLAN 10",
+        "category": "vlan_config"
+      }
+    ]
+  }
 }
