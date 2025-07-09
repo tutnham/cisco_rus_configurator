@@ -24,6 +24,10 @@ args = "cisco_translator_app"
 task = "workflow.run"
 args = "Test GUI"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Web App"
+
 [[workflows.workflow]]
 name = "Cisco Translator App"
 author = "agent"
@@ -47,3 +51,16 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python test_gui.py"
+
+[[workflows.workflow]]
+name = "Web App"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python web_app.py"
+waitForPort = 5000
+
+[[ports]]
+localPort = 5000
+externalPort = 80

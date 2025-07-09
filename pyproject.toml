@@ -5,6 +5,7 @@ description = "Add your description here"
 requires-python = ">=3.11"
 dependencies = [
     "cryptography>=45.0.5",
+    "flask>=3.1.1",
     "paramiko>=3.5.1",
     "pyserial>=3.5",
 ]
