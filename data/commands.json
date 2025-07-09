@@ -91,6 +91,149 @@
       }
     ]
   },
+  "vlan_config": {
+    "name": "Настройка VLAN",
+    "description": "Команды для создания и управления VLAN",
+    "commands": [
+      {
+        "command": "vlan 10",
+        "description": "Создать VLAN 10",
+        "category": "vlan_config"
+      },
+      {
+        "command": "name Sales",
+        "description": "Присвоить имя VLAN",
+        "category": "vlan_config"
+      },
+      {
+        "command": "interface FastEthernet0/1",
+        "description": "Перейти к настройке интерфейса",
+        "category": "vlan_config"
+      },
+      {
+        "command": "switchport mode access",
+        "description": "Установить режим интерфейса как access",
+        "category": "vlan_config"
+      },
+      {
+        "command": "switchport access vlan 10",
+        "description": "Назначить порт в VLAN 10",
+        "category": "vlan_config"
+      },
+      {
+        "command": "switchport mode trunk",
+        "description": "Установить режим интерфейса как trunk",
+        "category": "vlan_config"
+      },
+      {
+        "command": "switchport trunk allowed vlan 10,20",
+        "description": "Разрешить VLAN 10 и 20 через trunk",
+        "category": "vlan_config"
+      },
+      {
+        "command": "no vlan 10",
+        "description": "Удалить VLAN 10",
+        "category": "vlan_config"
+      }
+    ]
+  },
+  "telephony_config": {
+    "name": "Настройка телефонии",
+    "description": "Команды для работы с IP-телефонами и голосовой VLAN",
+    "commands": [
+      {
+        "command": "interface FastEthernet0/5",
+        "description": "Перейти к настройке интерфейса под телефон",
+        "category": "telephony_config"
+      },
+      {
+        "command": "switchport mode access",
+        "description": "Установить режим интерфейса как access",
+        "category": "telephony_config"
+      },
+      {
+        "command": "switchport voice vlan 150",
+        "description": "Назначить голосовую VLAN 150",
+        "category": "telephony_config"
+      },
+      {
+        "command": "switchport access vlan 30",
+        "description": "Назначить данные в VLAN 30",
+        "category": "telephony_config"
+      },
+      {
+        "command": "spanning-tree portfast",
+        "description": "Включить быстрое переключение порта",
+        "category": "telephony_config"
+      },
+      {
+        "command": "ip dhcp pool VOICE",
+        "description": "Создать DHCP пул для голосовых VLAN",
+        "category": "telephony_config"
+      },
+      {
+        "command": "network 192.168.150.0 255.255.255.0",
+        "description": "Задать диапазон IP для голосовых VLAN",
+        "category": "telephony_config"
+      },
+      {
+        "command": "option 150 ip 192.168.1.10",
+        "description": "Указать IP CUCM сервера через DHCP",
+        "category": "telephony_config"
+      }
+    ]
+  },
+  "e1_config": {
+    "name": "Настройка E1/T1",
+    "description": "Команды для работы с голосовыми трактами E1/T1",
+    "commands": [
+      {
+        "command": "controller E1 0/0/0",
+        "description": "Перейти к настройке контроллера E1",
+        "category": "e1_config"
+      },
+      {
+        "command": "framing NO-CRC4",
+        "description": "Установить тип фрейминга",
+        "category": "e1_config"
+      },
+      {
+        "command": "linecode HDB3",
+        "description": "Установить кодировку линии",
+        "category": "e1_config"
+      },
+      {
+        "command": "channel-group 0 timeslots 1-31 type e1",
+        "description": "Назначить временные слоты для группы каналов",
+        "category": "e1_config"
+      },
+      {
+        "command": "voice-port 0/0/0:15",
+        "description": "Перейти к настройке голосового порта",
+        "category": "e1_config"
+      },
+      {
+        "command": "connection plar 2000",
+        "description": "Подключить прямой вызов на внутренний номер",
+        "category": "e1_config"
+      },
+      {
+        "command": "dial-peer voice 1 pots",
+        "description": "Создать dial-peer для аналогового вызова",
+        "category": "e1_config"
+      },
+      {
+        "command": "destination-pattern 9T",
+        "description": "Задать шаблон набора номера",
+        "category": "e1_config"
+      },
+      {
+        "command": "port 0/0/0:15",
+        "description": "Привязать dial-peer к физическому порту",
+        "category": "e1_config"
+      }
+    ]
+  },
   "routing": {
     "name": "Маршрутизация",
     "description": "Команды для настройки маршрутизации",
