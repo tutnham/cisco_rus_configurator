@@ -1,0 +1,19 @@
+{
+  "postgresql": {
+    "host": "localhost",
+    "port": 5432,
+    "database": "cisco_translator",
+    "user": "cisco_user",
+    "password": "cisco_password_2025"
+  },
+  "connection_pool": {
+    "min_connections": 1,
+    "max_connections": 10,
+    "connection_timeout": 30
+  },
+  "settings": {
+    "auto_reconnect": true,
+    "query_timeout": 30,
+    "enable_logging": true
+  }
+}

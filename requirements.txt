@@ -1,0 +1,16 @@
+# Основные зависимости для Cisco Translator
+paramiko>=3.5.1
+cryptography>=45.0.5
+pyserial>=3.5
+
+# Для работы с PostgreSQL
+psycopg2-binary>=2.9.9
+
+# Для веб-приложения
+flask>=3.1.1
+
+# Для GUI (встроено в Python)
+# tkinter - встроено в стандартную библиотеку Python
+
+# Дополнительные зависимости
+python-dotenv>=1.0.0
