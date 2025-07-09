@@ -26,22 +26,44 @@ def main():
         
         # Create the main window
         root = tk.Tk()
-        root.withdraw()  # Hide root window initially
+        root.title("Cisco Translator")
+        
+        # Set window properties for better visibility
+        root.geometry("1200x800")
+        root.minsize(800, 600)
+        
+        # Center the window on screen
+        root.update_idletasks()
+        width = root.winfo_width()
+        height = root.winfo_height()
+        x = (root.winfo_screenwidth() // 2) - (width // 2)
+        y = (root.winfo_screenheight() // 2) - (height // 2)
+        root.geometry(f"{width}x{height}+{x}+{y}")
         
         # Create and show the main application window
         app = MainWindow(root)
+        
+        # Ensure window is visible
+        root.deiconify()
+        root.lift()
+        root.focus_force()
+        
+        logger.info("GUI initialized successfully")
         
         # Start the GUI event loop
         root.mainloop()
         
     except Exception as e:
         # Show error dialog if application fails to start
-        root = tk.Tk()
-        root.withdraw()
-        messagebox.showerror(
-            "Ошибка запуска",
-            f"Не удалось запустить приложение:\n{str(e)}"
-        )
+        try:
+            root = tk.Tk()
+            root.withdraw()
+            messagebox.showerror(
+                "Ошибка запуска",
+                f"Не удалось запустить приложение:\n{str(e)}"
+            )
+        except:
+            print(f"Critical error: {e}")
         logging.error(f"Failed to start application: {e}")
         sys.exit(1)
 

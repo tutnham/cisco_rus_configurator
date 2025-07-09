@@ -41,10 +41,6 @@ class MainWindow:
         
     def setup_ui(self):
         """Setup the main user interface"""
-        self.root.title("Cisco Translator v1.0")
-        self.root.geometry("1200x800")
-        self.root.minsize(800, 600)
-        
         # Configure style
         self.style = ttk.Style()
         self.theme_manager.apply_theme(self.style, "light")
@@ -58,8 +54,7 @@ class MainWindow:
         # Apply initial theme
         self.apply_current_theme()
         
-        # Show window
-        self.root.deiconify()
+        self.logger.info("UI setup completed")
         
     def create_menu(self):
         """Create application menu bar"""
