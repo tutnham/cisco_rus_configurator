@@ -34,7 +34,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pip install paramiko cryptography pyserial && python main.py"
+args = "python -m pip install paramiko cryptography pyserial && python main.py"
 
 [[workflows.workflow]]
 name = "cisco_translator_app"
@@ -42,7 +42,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pip install -q paramiko cryptography pyserial && python main.py"
+args = "python -m pip install -q paramiko cryptography pyserial && python main.py"
 
 [[workflows.workflow]]
 name = "Test GUI"
