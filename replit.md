@@ -134,6 +134,7 @@ cisco_translator/
 Changelog:
 - July 08, 2025. Initial setup
 - July 09, 2025. Added web interface with custom command and macro management
+- July 09, 2025. Enhanced web interface with full Russian localization, multiple connection types (SSH/Telnet/COM), device monitoring with port/VLAN status, and improved UI with tabbed interface
 ```
 
 ## User Preferences

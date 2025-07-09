@@ -44,10 +44,108 @@
         }
 
         .main-content {
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: #ecf0f1;
+            color: #7f8c8d;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+
+        .tab.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #d5dbdb;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .commands-grid {
             display: grid;
             grid-template-columns: 1fr 300px;
             gap: 20px;
-            margin-bottom: 20px;
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .port-status {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .port-status.up {
+            border-left-color: #27ae60;
+        }
+
+        .port-status.down {
+            border-left-color: #e74c3c;
+        }
+
+        .vlan-item {
+            background: #e8f5e8;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            border-left: 3px solid #27ae60;
+        }
+
+        .connection-type-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .connection-type-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .connection-fields {
+            display: none;
+        }
+
+        .connection-fields.active {
+            display: block;
         }
 
         .left-panel {
@@ -410,67 +508,141 @@
             
             <div id="connectionForm">
                 <div class="form-group">
-                    <label for="host">IP адрес или имя хоста:</label>
-                    <input type="text" id="host" placeholder="192.168.1.1" required>
+                    <label>Тип подключения:</label>
+                    <div class="connection-type-group">
+                        <label>
+                            <input type="radio" name="connectionType" value="ssh" checked>
+                            SSH
+                        </label>
+                        <label>
+                            <input type="radio" name="connectionType" value="telnet">
+                            Telnet
+                        </label>
+                        <label>
+                            <input type="radio" name="connectionType" value="serial">
+                            COM порт
+                        </label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="username">Имя пользователя:</label>
-                    <input type="text" id="username" placeholder="admin" required>
+
+                <div id="networkFields" class="connection-fields active">
+                    <div class="form-group">
+                        <label for="host">IP адрес или имя хоста:</label>
+                        <input type="text" id="host" placeholder="192.168.1.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Имя пользователя:</label>
+                        <input type="text" id="username" placeholder="admin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="password" id="password" placeholder="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="port">Порт:</label>
+                        <input type="number" id="port" value="22" min="1" max="65535">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Пароль:</label>
-                    <input type="password" id="password" placeholder="password" required>
+
+                <div id="serialFields" class="connection-fields">
+                    <div class="form-group">
+                        <label for="comPort">COM порт:</label>
+                        <select id="comPort">
+                            <option value="">Выберите порт</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="baudRate">Скорость:</label>
+                        <select id="baudRate">
+                            <option value="9600">9600</option>
+                            <option value="19200">19200</option>
+                            <option value="38400">38400</option>
+                            <option value="57600">57600</option>
+                            <option value="115200" selected>115200</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="port">Порт:</label>
-                    <input type="number" id="port" value="22" min="1" max="65535">
-                </div>
+
                 <button id="connectBtn" class="btn">Подключиться</button>
                 <button id="disconnectBtn" class="btn danger" style="display: none;">Отключиться</button>
             </div>
         </div>
 
         <div class="main-content">
-            <div class="left-panel">
-                <div class="section-title">Доступные команды</div>
-                
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Поиск команд...">
-                </div>
-
-                <div class="management-buttons">
-                    <button id="addCommandBtn" class="btn btn-small">Добавить команду</button>
-                    <button id="removeCommandBtn" class="btn btn-small danger" disabled>Удалить команду</button>
-                </div>
-                
-                <div class="form-group">
-                    <label for="categorySelect">Категория:</label>
-                    <select id="categorySelect">
-                        <option value="">Загрузка...</option>
-                    </select>
-                </div>
-
-                <div id="commandList" class="command-list">
-                    <div class="loading">Выберите категорию</div>
-                </div>
-
-                <button id="executeBtn" class="btn success" disabled>Выполнить команду</button>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('commands')">Команды и макросы</button>
+                <button class="tab" onclick="switchTab('monitoring')">Мониторинг устройства</button>
             </div>
 
-            <div class="right-panel">
-                <div class="section-title">Макросы</div>
-                
-                <div class="management-buttons">
-                    <button id="addMacroBtn" class="btn btn-small">Создать макрос</button>
-                    <button id="editMacroBtn" class="btn btn-small" disabled>Редактировать</button>
-                    <button id="deleteMacroBtn" class="btn btn-small danger" disabled>Удалить</button>
-                </div>
+            <div id="commandsTab" class="tab-content active">
+                <div class="commands-grid">
+                    <div class="left-panel">
+                        <div class="section-title">Доступные команды</div>
+                        
+                        <div class="search-box">
+                            <input type="text" id="searchInput" placeholder="Поиск команд...">
+                        </div>
 
-                <div id="macroList" class="macro-list">
-                    <div class="loading">Загрузка макросов...</div>
-                </div>
+                        <div class="management-buttons">
+                            <button id="addCommandBtn" class="btn btn-small">Добавить команду</button>
+                            <button id="removeCommandBtn" class="btn btn-small danger" disabled>Удалить команду</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="categorySelect">Категория:</label>
+                            <select id="categorySelect">
+                                <option value="">Загрузка...</option>
+                            </select>
+                        </div>
 
-                <button id="executeMacroBtn" class="btn success" disabled>Выполнить макрос</button>
+                        <div id="commandList" class="command-list">
+                            <div class="loading">Выберите категорию</div>
+                        </div>
+
+                        <button id="executeBtn" class="btn success" disabled>Выполнить команду</button>
+                    </div>
+
+                    <div class="right-panel">
+                        <div class="section-title">Макросы</div>
+                        
+                        <div class="management-buttons">
+                            <button id="addMacroBtn" class="btn btn-small">Создать макрос</button>
+                            <button id="editMacroBtn" class="btn btn-small" disabled>Редактировать</button>
+                            <button id="deleteMacroBtn" class="btn btn-small danger" disabled>Удалить</button>
+                        </div>
+
+                        <div id="macroList" class="macro-list">
+                            <div class="loading">Загрузка макросов...</div>
+                        </div>
+
+                        <button id="executeMacroBtn" class="btn success" disabled>Выполнить макрос</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="monitoringTab" class="tab-content">
+                <div class="monitoring-grid">
+                    <div class="left-panel">
+                        <div class="section-title">Состояние портов</div>
+                        <div class="management-buttons">
+                            <button id="refreshPortsBtn" class="btn btn-small">Обновить данные</button>
+                            <button id="autoRefreshBtn" class="btn btn-small">Авто-обновление</button>
+                        </div>
+                        <div id="portsContainer">
+                            <div class="loading">Подключитесь к устройству для просмотра портов</div>
+                        </div>
+                    </div>
+
+                    <div class="right-panel">
+                        <div class="section-title">Активные VLAN</div>
+                        <div class="management-buttons">
+                            <button id="refreshVlanBtn" class="btn btn-small">Обновить VLAN</button>
+                        </div>
+                        <div id="vlanContainer">
+                            <div class="loading">Подключитесь к устройству для просмотра VLAN</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -541,6 +713,8 @@
         let connected = false;
         let currentMacroCommands = [];
         let editingMacro = null;
+        let autoRefreshInterval = null;
+        let connectionType = 'ssh';
 
         // DOM elements
         const statusDiv = document.getElementById('status');
@@ -581,6 +755,16 @@
         document.getElementById('saveCommandBtn').addEventListener('click', saveCommand);
         document.getElementById('saveMacroBtn').addEventListener('click', saveMacro);
         document.getElementById('addMacroCommandBtn').addEventListener('click', addMacroCommand);
+        
+        // Connection type change listeners
+        document.querySelectorAll('input[name="connectionType"]').forEach(radio => {
+            radio.addEventListener('change', handleConnectionTypeChange);
+        });
+        
+        // Monitoring listeners
+        document.getElementById('refreshPortsBtn').addEventListener('click', refreshPortsStatus);
+        document.getElementById('refreshVlanBtn').addEventListener('click', refreshVlanStatus);
+        document.getElementById('autoRefreshBtn').addEventListener('click', toggleAutoRefresh);
 
         // Load categories
         function loadCategories() {
@@ -692,32 +876,114 @@
             deleteMacroBtn.disabled = false;
         }
 
+        // Switch tabs
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // Handle connection type change
+        function handleConnectionTypeChange(event) {
+            connectionType = event.target.value;
+            
+            // Hide all connection fields
+            document.querySelectorAll('.connection-fields').forEach(field => {
+                field.classList.remove('active');
+            });
+            
+            // Show appropriate fields
+            if (connectionType === 'serial') {
+                document.getElementById('serialFields').classList.add('active');
+                loadComPorts();
+            } else {
+                document.getElementById('networkFields').classList.add('active');
+                // Update default port
+                const portInput = document.getElementById('port');
+                if (connectionType === 'ssh') {
+                    portInput.value = '22';
+                } else if (connectionType === 'telnet') {
+                    portInput.value = '23';
+                }
+            }
+        }
+
+        // Load available COM ports
+        function loadComPorts() {
+            fetch('/api/com_ports')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const comPortSelect = document.getElementById('comPort');
+                        comPortSelect.innerHTML = '<option value="">Выберите порт</option>';
+                        data.ports.forEach(port => {
+                            const option = document.createElement('option');
+                            option.value = port;
+                            option.textContent = port;
+                            comPortSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading COM ports:', error);
+                });
+        }
+
         // Connect to device
         function connect() {
-            const host = document.getElementById('host').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const port = document.getElementById('port').value;
-
-            if (!host || !username || !password) {
-                showError('Заполните все поля');
-                return;
-            }
-
             connectBtn.disabled = true;
             connectBtn.textContent = 'Подключение...';
+
+            let connectionData;
+            
+            if (connectionType === 'serial') {
+                const comPort = document.getElementById('comPort').value;
+                const baudRate = document.getElementById('baudRate').value;
+                
+                if (!comPort) {
+                    showError('Выберите COM порт');
+                    connectBtn.disabled = false;
+                    connectBtn.textContent = 'Подключиться';
+                    return;
+                }
+                
+                connectionData = {
+                    type: 'serial',
+                    port: comPort,
+                    baudrate: parseInt(baudRate)
+                };
+            } else {
+                const host = document.getElementById('host').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const port = document.getElementById('port').value;
+
+                if (!host || !username || !password) {
+                    showError('Заполните все поля');
+                    connectBtn.disabled = false;
+                    connectBtn.textContent = 'Подключиться';
+                    return;
+                }
+
+                connectionData = {
+                    type: connectionType,
+                    host: host,
+                    username: username,
+                    password: password,
+                    port: parseInt(port)
+                };
+            }
 
             fetch('/api/connect', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    host: host,
-                    username: username,
-                    password: password,
-                    port: parseInt(port)
-                })
+                body: JSON.stringify(connectionData)
             })
             .then(response => response.json())
             .then(data => {
@@ -732,6 +998,12 @@
                     if (selectedMacro) executeMacroBtn.disabled = false;
                     
                     addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
+                    
+                    // Auto-load monitoring data if on monitoring tab
+                    if (document.getElementById('monitoringTab').classList.contains('active')) {
+                        refreshPortsStatus();
+                        refreshVlanStatus();
+                    }
                 } else {
                     showError(data.error);
                 }
@@ -1172,6 +1444,134 @@
                 .catch(error => {
                     showError('Ошибка удаления макроса: ' + error.message);
                 });
+            }
+        }
+
+        // Refresh ports status
+        function refreshPortsStatus() {
+            if (!connected) {
+                showError('Подключитесь к устройству');
+                return;
+            }
+
+            document.getElementById('refreshPortsBtn').disabled = true;
+            document.getElementById('refreshPortsBtn').textContent = 'Обновление...';
+
+            fetch('/api/get_ports_status', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayPortsStatus(data.ports);
+                } else {
+                    showError('Ошибка получения данных о портах: ' + data.error);
+                }
+            })
+            .catch(error => {
+                showError('Ошибка получения данных о портах: ' + error.message);
+            })
+            .finally(() => {
+                document.getElementById('refreshPortsBtn').disabled = false;
+                document.getElementById('refreshPortsBtn').textContent = 'Обновить данные';
+            });
+        }
+
+        // Display ports status
+        function displayPortsStatus(ports) {
+            const container = document.getElementById('portsContainer');
+            container.innerHTML = '';
+
+            if (ports.length === 0) {
+                container.innerHTML = '<div class="loading">Порты не найдены</div>';
+                return;
+            }
+
+            ports.forEach(port => {
+                const div = document.createElement('div');
+                div.className = `port-status ${port.status.toLowerCase()}`;
+                div.innerHTML = `
+                    <div style="font-weight: bold;">${port.name}</div>
+                    <div>Статус: ${port.status}</div>
+                    <div>Скорость: ${port.speed || 'N/A'}</div>
+                    <div>Дуплекс: ${port.duplex || 'N/A'}</div>
+                    ${port.vlan ? `<div>VLAN: ${port.vlan}</div>` : ''}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Refresh VLAN status
+        function refreshVlanStatus() {
+            if (!connected) {
+                showError('Подключитесь к устройству');
+                return;
+            }
+
+            document.getElementById('refreshVlanBtn').disabled = true;
+            document.getElementById('refreshVlanBtn').textContent = 'Обновление...';
+
+            fetch('/api/get_vlan_status', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayVlanStatus(data.vlans);
+                } else {
+                    showError('Ошибка получения данных о VLAN: ' + data.error);
+                }
+            })
+            .catch(error => {
+                showError('Ошибка получения данных о VLAN: ' + error.message);
+            })
+            .finally(() => {
+                document.getElementById('refreshVlanBtn').disabled = false;
+                document.getElementById('refreshVlanBtn').textContent = 'Обновить VLAN';
+            });
+        }
+
+        // Display VLAN status
+        function displayVlanStatus(vlans) {
+            const container = document.getElementById('vlanContainer');
+            container.innerHTML = '';
+
+            if (vlans.length === 0) {
+                container.innerHTML = '<div class="loading">VLAN не найдены</div>';
+                return;
+            }
+
+            vlans.forEach(vlan => {
+                const div = document.createElement('div');
+                div.className = 'vlan-item';
+                div.innerHTML = `
+                    <div style="font-weight: bold;">VLAN ${vlan.id}</div>
+                    <div>Название: ${vlan.name}</div>
+                    <div>Статус: ${vlan.status}</div>
+                    <div>Порты: ${vlan.ports.join(', ')}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Toggle auto refresh
+        function toggleAutoRefresh() {
+            const btn = document.getElementById('autoRefreshBtn');
+            
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+                btn.textContent = 'Авто-обновление';
+                btn.classList.remove('active');
+            } else {
+                autoRefreshInterval = setInterval(() => {
+                    if (connected && document.getElementById('monitoringTab').classList.contains('active')) {
+                        refreshPortsStatus();
+                        refreshVlanStatus();
+                    }
+                }, 30000); // Update every 30 seconds
+                btn.textContent = 'Остановить авто-обновление';
+                btn.classList.add('active');
             }
         }
     </script>
