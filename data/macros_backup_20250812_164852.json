@@ -1,0 +1,56 @@
+{
+  "basic_info": {
+    "name": "Базовая информация",
+    "description": "Получить основную информацию об устройстве",
+    "commands": [
+      "show version",
+      "show ip interface brief",
+      "show running-config | include hostname"
+    ],
+    "created_date": "2025-01-01",
+    "author": "system"
+  },
+  "interface_status": {
+    "name": "Статус интерфейсов",
+    "description": "Проверить состояние всех интерфейсов",
+    "commands": [
+      "show interfaces",
+      "show ip interface brief",
+      "show interfaces status"
+    ],
+    "created_date": "2025-01-01",
+    "author": "system"
+  },
+  "routing_info": {
+    "name": "Информация о маршрутизации",
+    "description": "Получить информацию о маршрутизации",
+    "commands": [
+      "show ip route",
+      "show ip protocols",
+      "show arp"
+    ],
+    "created_date": "2025-01-01",
+    "author": "system"
+  },
+  "security_check": {
+    "name": "Проверка безопасности",
+    "description": "Проверить настройки безопасности",
+    "commands": [
+      "show running-config | include username",
+      "show running-config | include enable",
+      "show running-config | include access-list",
+      "show line"
+    ],
+    "created_date": "2025-01-01",
+    "author": "system"
+  },
+  "save_config": {
+    "name": "Сохранить конфигурацию",
+    "description": "Сохранить текущую конфигурацию",
+    "commands": [
+      "copy running-config startup-config"
+    ],
+    "created_date": "2025-01-01",
+    "author": "system"
+  }
+}
