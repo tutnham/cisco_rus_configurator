@@ -7,15 +7,34 @@ import socket
 import time
 import logging
 import threading
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 class SSHClient:
-    def __init__(self):
+    def __init__(self, initial_wait: float = 2.0, disable_paging_wait: float = 1.0):
+        """
+        Initialize SSH client
+        
+        Args:
+            initial_wait: Time to wait after shell creation (default: 2.0s)
+            disable_paging_wait: Time to wait after disabling paging (default: 1.0s)
+        """
         self.client = None
         self.shell = None
         self.connected = False
         self.logger = logging.getLogger(__name__)
         self.lock = threading.Lock()
+        
+        # Configurable timeouts for better performance tuning
+        self.initial_wait = initial_wait
+        self.disable_paging_wait = disable_paging_wait
+    
+    def __enter__(self):
+        """Context manager entry."""
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit."""
+        self.disconnect()
         
     def connect(self, hostname: str, username: str, password: str, port: int = 22, timeout: int = 10) -> bool:
         """
@@ -52,8 +71,8 @@ class SSHClient:
             self.shell = self.client.invoke_shell()
             self.shell.settimeout(timeout)
             
-            # Wait for initial prompt
-            time.sleep(2)
+            # Wait for initial prompt - configurable timeout
+            time.sleep(self.initial_wait)
             
             # Clear initial output
             if self.shell.recv_ready():
@@ -61,7 +80,7 @@ class SSHClient:
                 
             # Disable paging
             self._send_command_raw("terminal length 0")
-            time.sleep(1)
+            time.sleep(self.disable_paging_wait)
             
             # Clear output after terminal length command
             if self.shell.recv_ready():
@@ -71,11 +90,20 @@ class SSHClient:
             self.logger.info(f"Successfully connected to {hostname}")
             return True
             
-        except (paramiko.AuthenticationException, 
-                paramiko.SSHException, 
-                socket.error, 
-                Exception) as e:
-            self.logger.error(f"Failed to connect to {hostname}: {e}")
+        except paramiko.AuthenticationException as e:
+            self.logger.error(f"Authentication failed for {hostname}: {e}")
+            self.disconnect()
+            return False
+        except paramiko.SSHException as e:
+            self.logger.error(f"SSH error connecting to {hostname}: {e}")
+            self.disconnect()
+            return False
+        except socket.error as e:
+            self.logger.error(f"Network error connecting to {hostname}: {e}")
+            self.disconnect()
+            return False
+        except Exception as e:
+            self.logger.error(f"Unexpected error connecting to {hostname}: {e}")
             self.disconnect()
             return False
             

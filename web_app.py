@@ -7,9 +7,11 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, s
 import json
 import os
 import logging
+import secrets
 from datetime import datetime
 import threading
 import time
+from typing import Dict, Any, Optional
 
 # Import our core modules
 from core.command_manager import CommandManager
@@ -21,13 +23,16 @@ from core.security import SecureStorage
 from core.logger import setup_logging
 
 app = Flask(__name__)
-app.secret_key = 'cisco_translator_secret_key_2025'
+
+# Улучшение безопасности: генерируем случайный секретный ключ
+# В продакшене следует использовать переменную окружения
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(32))
 
 # Global managers
 command_manager = CommandManager()
 macro_manager = MacroManager()
 secure_storage = SecureStorage()
-ssh_clients = {}  # Store SSH clients by session ID
+ssh_clients: Dict[str, SSHClient] = {}  # Store SSH clients by session ID
 
 # Setup logging
 setup_logging()
@@ -73,14 +78,36 @@ def connect():
     """Connect to device"""
     try:
         data = request.json
+        if not data:
+            return jsonify({'success': False, 'error': 'Отсутствуют данные для подключения'})
+            
+        # Валидация обязательных полей
+        required_fields = ['host', 'username', 'password']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({'success': False, 'error': f'Поле {field} обязательно для заполнения'})
+        
         session_id = session.get('session_id', str(time.time()))
         session['session_id'] = session_id
         connection_type = data.get('type', 'ssh')
         
+        # Валидация типа подключения
+        valid_connection_types = ['ssh', 'telnet', 'serial']
+        if connection_type not in valid_connection_types:
+            return jsonify({'success': False, 'error': f'Неподдерживаемый тип подключения: {connection_type}'})
+        
         if connection_type == 'serial':
             # Handle serial connection (simulation for web environment)
-            com_port = data['port']
+            com_port = data.get('port')
+            if not com_port:
+                return jsonify({'success': False, 'error': 'COM порт не указан'})
+                
             baudrate = data.get('baudrate', 115200)
+            
+            # Валидация baudrate
+            valid_baudrates = [9600, 19200, 38400, 57600, 115200]
+            if baudrate not in valid_baudrates:
+                return jsonify({'success': False, 'error': f'Неподдерживаемая скорость порта: {baudrate}'})
             
             session['connected'] = True
             session['host'] = f"COM:{com_port}"
@@ -92,10 +119,14 @@ def connect():
             })
         else:
             # Handle SSH/Telnet connection
-            hostname = data['host']
-            username = data['username']
+            hostname = data['host'].strip()
+            username = data['username'].strip()
             password = data['password']
             port = data.get('port', 22 if connection_type == 'ssh' else 23)
+            
+            # Базовая валидация порта
+            if not isinstance(port, int) or port < 1 or port > 65535:
+                return jsonify({'success': False, 'error': 'Некорректный номер порта'})
             
             # Create SSH client
             ssh_client = SSHClient()
@@ -116,9 +147,12 @@ def connect():
             else:
                 return jsonify({'success': False, 'error': 'Не удалось подключиться к устройству'})
             
+    except ValueError as e:
+        logger.error(f"Validation error: {e}")
+        return jsonify({'success': False, 'error': f'Ошибка валидации: {str(e)}'})
     except Exception as e:
         logger.error(f"Connection error: {e}")
-        return jsonify({'success': False, 'error': str(e)})
+        return jsonify({'success': False, 'error': f'Ошибка подключения: {str(e)}'})
 
 @app.route('/api/disconnect', methods=['POST'])
 def disconnect():
@@ -143,13 +177,36 @@ def execute_command():
     """Execute a command"""
     try:
         data = request.json
+        if not data or 'command' not in data:
+            return jsonify({'success': False, 'error': 'Команда не указана'})
+            
         session_id = session.get('session_id')
         
         if not session.get('connected') or session_id not in ssh_clients:
             return jsonify({'success': False, 'error': 'Нет подключения к устройству'})
         
         ssh_client = ssh_clients[session_id]
-        command = data['command']
+        command = data['command'].strip()
+        
+        # Валидация команды
+        if not command:
+            return jsonify({'success': False, 'error': 'Пустая команда'})
+            
+        # Базовые проверки безопасности команд
+        dangerous_patterns = [
+            'rm -rf', 'del ', 'format', 'fdisk', 'mkfs',
+            'dd if=', '> /dev/', 'shutdown', 'reboot', 'halt'
+        ]
+        
+        command_lower = command.lower()
+        for pattern in dangerous_patterns:
+            if pattern in command_lower:
+                logger.warning(f"Potentially dangerous command blocked: {command}")
+                return jsonify({'success': False, 'error': 'Команда заблокирована из соображений безопасности'})
+        
+        # Ограничение длины команды
+        if len(command) > 1000:
+            return jsonify({'success': False, 'error': 'Команда слишком длинная (максимум 1000 символов)'})
         
         # Execute command
         result = ssh_client.execute_command(command)
@@ -163,7 +220,7 @@ def execute_command():
         
     except Exception as e:
         logger.error(f"Command execution error: {e}")
-        return jsonify({'success': False, 'error': str(e)})
+        return jsonify({'success': False, 'error': f'Ошибка выполнения команды: {str(e)}'})
 
 @app.route('/api/execute_macro', methods=['POST'])
 def execute_macro():

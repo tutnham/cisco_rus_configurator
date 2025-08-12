@@ -8,6 +8,7 @@ import logging
 import json
 from typing import List, Dict, Optional, Any
 from datetime import datetime
+from contextlib import contextmanager
 
 class DatabaseManager:
     def __init__(self, config: Dict[str, Any]):
@@ -28,37 +29,67 @@ class DatabaseManager:
             )
             self.connection.autocommit = True
             self.logger.info("Подключение к PostgreSQL установлено")
-        except Exception as e:
+        except psycopg2.OperationalError as e:
             self.logger.error(f"Ошибка подключения к PostgreSQL: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Неожиданная ошибка подключения к PostgreSQL: {e}")
             raise
             
     def disconnect(self):
         """Отключение от базы данных"""
         if self.connection:
-            self.connection.close()
-            self.logger.info("Отключение от PostgreSQL")
+            try:
+                self.connection.close()
+                self.logger.info("Отключение от PostgreSQL")
+            except Exception as e:
+                self.logger.error(f"Ошибка при отключении от PostgreSQL: {e}")
+    
+    def __enter__(self):
+        """Context manager entry"""
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit"""
+        self.disconnect()
+        
+    @contextmanager
+    def get_cursor(self):
+        """Context manager for database cursor"""
+        if not self.connection:
+            raise psycopg2.OperationalError("No database connection")
+            
+        cursor = None
+        try:
+            cursor = self.connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+            yield cursor
+        except psycopg2.Error as e:
+            self.logger.error(f"Database error: {e}")
+            if self.connection:
+                self.connection.rollback()
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected database error: {e}")
+            if self.connection:
+                self.connection.rollback()
+            raise
+        finally:
+            if cursor:
+                cursor.close()
             
     def execute_query(self, query: str, params: tuple = None) -> List[Dict]:
         """Выполнение SQL запроса"""
-        try:
-            with self.connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
-                cursor.execute(query, params)
-                if cursor.description:
-                    return [dict(row) for row in cursor.fetchall()]
-                return []
-        except Exception as e:
-            self.logger.error(f"Ошибка выполнения запроса: {e}")
-            raise
+        with self.get_cursor() as cursor:
+            cursor.execute(query, params)
+            if cursor.description:
+                return [dict(row) for row in cursor.fetchall()]
+            return []
             
     def execute_non_query(self, query: str, params: tuple = None) -> int:
         """Выполнение запроса без возврата данных"""
-        try:
-            with self.connection.cursor() as cursor:
-                cursor.execute(query, params)
-                return cursor.rowcount
-        except Exception as e:
-            self.logger.error(f"Ошибка выполнения запроса: {e}")
-            raise
+        with self.get_cursor() as cursor:
+            cursor.execute(query, params)
+            return cursor.rowcount
 
 class PostgreSQLCommandManager:
     def __init__(self, db_manager: DatabaseManager):
