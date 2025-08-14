@@ -6,7 +6,10 @@ Cisco Translator Web Application with PostgreSQL support
 from flask import Flask, render_template, request, jsonify, session
 import logging
 import time
+import secrets
+import os
 from datetime import datetime
+from typing import Dict, Any, Optional
 
 # Import our core modules
 from core.logger import setup_logging
@@ -15,7 +18,10 @@ from core.database import DatabaseManager, PostgreSQLCommandManager, PostgreSQLM
 from core.ssh_client import SSHClient
 
 app = Flask(__name__)
-app.secret_key = 'cisco_translator_postgres_secret_key_2025'
+
+# Улучшение безопасности: генерируем случайный секретный ключ
+# В продакшене следует использовать переменную окружения  
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(32))
 
 # Setup logging
 setup_logging()

@@ -5,17 +5,30 @@ Command Manager for handling Cisco CLI commands with Russian translations
 import json
 import os
 import logging
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 
 class CommandManager:
-    def __init__(self, commands_file: str = "data/commands.json"):
+    """
+    Manages Cisco CLI commands with Russian translations.
+    
+    Provides functionality to load, save, search, and manage
+    command categories and individual commands.
+    """
+    
+    def __init__(self, commands_file: str = "data/commands.json") -> None:
+        """
+        Initialize the Command Manager.
+        
+        Args:
+            commands_file: Path to the JSON file containing commands
+        """
         self.commands_file = commands_file
-        self.commands = {}
+        self.commands: Dict[str, Any] = {}
         self.logger = logging.getLogger(__name__)
         self.load_commands()
         
-    def load_commands(self):
-        """Load commands from JSON file"""
+    def load_commands(self) -> None:
+        """Load commands from JSON file."""
         try:
             if os.path.exists(self.commands_file):
                 with open(self.commands_file, 'r', encoding='utf-8') as f:
@@ -24,12 +37,15 @@ class CommandManager:
             else:
                 self.logger.warning(f"Commands file not found: {self.commands_file}")
                 self._create_default_commands()
-        except Exception as e:
+        except (json.JSONDecodeError, OSError) as e:
             self.logger.error(f"Failed to load commands: {e}")
             self._create_default_commands()
+        except Exception as e:
+            self.logger.error(f"Unexpected error loading commands: {e}")
+            self._create_default_commands()
             
-    def _create_default_commands(self):
-        """Create default command structure if file doesn't exist"""
+    def _create_default_commands(self) -> None:
+        """Create default command structure if file doesn't exist."""
         self.commands = {
             "show_commands": {
                 "name": "Команды отображения (Show)",
@@ -292,8 +308,8 @@ class CommandManager:
         # Save default commands to file
         self.save_commands()
         
-    def save_commands(self):
-        """Save commands to JSON file"""
+    def save_commands(self) -> None:
+        """Save commands to JSON file."""
         try:
             os.makedirs(os.path.dirname(self.commands_file), exist_ok=True)
             with open(self.commands_file, 'w', encoding='utf-8') as f:
@@ -303,29 +319,29 @@ class CommandManager:
             self.logger.error(f"Failed to save commands: {e}")
             
     def get_categories(self) -> List[str]:
-        """Get list of command categories"""
+        """Get list of command categories."""
         return [self.commands[cat]["name"] for cat in self.commands.keys()]
         
     def get_category_key_by_name(self, category_name: str) -> Optional[str]:
-        """Get category key by display name"""
+        """Get category key by display name."""
         for key, value in self.commands.items():
             if value["name"] == category_name:
                 return key
         return None
         
     def get_commands_by_category(self, category_name: str) -> List[Dict]:
-        """Get commands for a specific category"""
+        """Get commands for a specific category."""
         category_key = self.get_category_key_by_name(category_name)
         if category_key and category_key in self.commands:
             return self.commands[category_key]["commands"]
         return []
         
     def get_all_commands(self) -> Dict:
-        """Get all commands"""
+        """Get all commands."""
         return self.commands
         
-    def add_command(self, category: str, command: str, description: str):
-        """Add a new command to a category"""
+    def add_command(self, category: str, command: str, description: str) -> None:
+        """Add a new command to a category."""
         if category not in self.commands:
             self.commands[category] = {
                 "name": category,
@@ -343,8 +359,8 @@ class CommandManager:
         self.save_commands()
         self.logger.info(f"Added command '{command}' to category '{category}'")
         
-    def remove_command(self, category: str, command: str):
-        """Remove a command from a category"""
+    def remove_command(self, category: str, command: str) -> None:
+        """Remove a command from a category."""
         if category in self.commands:
             commands_list = self.commands[category]["commands"]
             self.commands[category]["commands"] = [
@@ -354,7 +370,7 @@ class CommandManager:
             self.logger.info(f"Removed command '{command}' from category '{category}'")
             
     def search_commands(self, search_term: str) -> List[Dict]:
-        """Search for commands containing the search term"""
+        """Search for commands containing the search term."""
         results = []
         search_term = search_term.lower()
         
@@ -367,7 +383,7 @@ class CommandManager:
         return results
         
     def get_command_by_description(self, description: str) -> Optional[Dict]:
-        """Get command by its description"""
+        """Get command by its description."""
         for category_data in self.commands.values():
             for command in category_data["commands"]:
                 if command["description"] == description:

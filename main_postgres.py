@@ -127,8 +127,10 @@ def main():
                 "Ошибка запуска",
                 f"Не удалось запустить приложение:\n{str(e)}"
             )
-        except:
+        except Exception as dialog_error:
+            # Если не удается показать диалог, выводим в консоль
             print(f"Critical error: {e}")
+            print(f"Dialog error: {dialog_error}")
         logging.error(f"Failed to start application: {e}")
         sys.exit(1)
 

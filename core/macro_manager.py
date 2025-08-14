@@ -5,17 +5,30 @@ Macro Manager for handling frequently used command sets
 import json
 import os
 import logging
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 
 class MacroManager:
-    def __init__(self, macros_file: str = "data/macros.json"):
+    """
+    Manages command macros for the Cisco Translator application.
+    
+    Provides functionality to create, load, save, and execute
+    sets of related commands as macros.
+    """
+    
+    def __init__(self, macros_file: str = "data/macros.json") -> None:
+        """
+        Initialize the Macro Manager.
+        
+        Args:
+            macros_file: Path to the JSON file containing macros
+        """
         self.macros_file = macros_file
-        self.macros = {}
+        self.macros: Dict[str, Any] = {}
         self.logger = logging.getLogger(__name__)
         self.load_macros()
         
-    def load_macros(self):
-        """Load macros from JSON file"""
+    def load_macros(self) -> None:
+        """Load macros from JSON file."""
         try:
             if os.path.exists(self.macros_file):
                 with open(self.macros_file, 'r', encoding='utf-8') as f:
@@ -24,12 +37,15 @@ class MacroManager:
             else:
                 self.logger.info("Macros file not found, creating default macros")
                 self._create_default_macros()
-        except Exception as e:
+        except (json.JSONDecodeError, OSError) as e:
             self.logger.error(f"Failed to load macros: {e}")
             self._create_default_macros()
+        except Exception as e:
+            self.logger.error(f"Unexpected error loading macros: {e}")
+            self._create_default_macros()
             
-    def _create_default_macros(self):
-        """Create default macros"""
+    def _create_default_macros(self) -> None:
+        """Create default macros."""
         self.macros = {
             "basic_info": {
                 "name": "Базовая информация",
@@ -89,27 +105,29 @@ class MacroManager:
         
         self.save_macros()
         
-    def save_macros(self):
-        """Save macros to JSON file"""
+    def save_macros(self) -> None:
+        """Save macros to JSON file."""
         try:
             os.makedirs(os.path.dirname(self.macros_file), exist_ok=True)
             with open(self.macros_file, 'w', encoding='utf-8') as f:
                 json.dump(self.macros, f, ensure_ascii=False, indent=2)
             self.logger.info(f"Macros saved to {self.macros_file}")
-        except Exception as e:
+        except (OSError, json.JSONDecodeError) as e:
             self.logger.error(f"Failed to save macros: {e}")
+        except Exception as e:
+            self.logger.error(f"Unexpected error saving macros: {e}")
             
     def get_all_macros(self) -> Dict:
-        """Get all macros"""
+        """Get all macros."""
         return self.macros
         
     def get_macro(self, macro_name: str) -> Optional[Dict]:
-        """Get a specific macro by name"""
+        """Get a specific macro by name."""
         return self.macros.get(macro_name)
         
     def create_macro(self, name: str, description: str, commands: List[str], author: str = "user") -> bool:
         """
-        Create a new macro
+        Create a new macro.
         
         Args:
             name: Macro name (must be unique)
@@ -140,7 +158,7 @@ class MacroManager:
         
     def update_macro(self, name: str, description: str = None, commands: List[str] = None) -> bool:
         """
-        Update an existing macro
+        Update an existing macro.
         
         Args:
             name: Macro name
@@ -169,7 +187,7 @@ class MacroManager:
         
     def delete_macro(self, name: str) -> bool:
         """
-        Delete a macro
+        Delete a macro.
         
         Args:
             name: Macro name
@@ -188,7 +206,7 @@ class MacroManager:
         
     def duplicate_macro(self, original_name: str, new_name: str) -> bool:
         """
-        Duplicate an existing macro with a new name
+        Duplicate an existing macro with a new name.
         
         Args:
             original_name: Name of macro to duplicate
@@ -215,12 +233,12 @@ class MacroManager:
         )
         
     def get_macro_names(self) -> List[str]:
-        """Get list of all macro names"""
+        """Get list of all macro names."""
         return list(self.macros.keys())
         
     def search_macros(self, search_term: str) -> List[str]:
         """
-        Search for macros by name or description
+        Search for macros by name or description.
         
         Args:
             search_term: Term to search for
@@ -240,7 +258,7 @@ class MacroManager:
         
     def export_macro(self, name: str, filepath: str) -> bool:
         """
-        Export a macro to a file
+        Export a macro to a file.
         
         Args:
             name: Macro name
@@ -259,13 +277,16 @@ class MacroManager:
                 json.dump(macro_data, f, ensure_ascii=False, indent=2)
             self.logger.info(f"Exported macro '{name}' to {filepath}")
             return True
-        except Exception as e:
+        except (OSError, json.JSONDecodeError) as e:
             self.logger.error(f"Failed to export macro '{name}': {e}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Unexpected error exporting macro '{name}': {e}")
             return False
             
     def import_macro(self, filepath: str) -> bool:
         """
-        Import a macro from a file
+        Import a macro from a file.
         
         Args:
             filepath: Path to the macro file
@@ -293,13 +314,16 @@ class MacroManager:
                 self.logger.info("No new macros to import")
                 return False
                 
-        except Exception as e:
+        except (json.JSONDecodeError, OSError) as e:
             self.logger.error(f"Failed to import macros from {filepath}: {e}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Unexpected error importing macros from {filepath}: {e}")
             return False
             
     def validate_macro(self, macro_data: Dict) -> bool:
         """
-        Validate macro data structure
+        Validate macro data structure.
         
         Args:
             macro_data: Macro data dictionary
