@@ -8,7 +8,7 @@ import json
 import os
 import logging
 import secrets
-from datetime import datetime
+from datetime import datetime, timedelta
 import threading
 import time
 from typing import Dict, Any, Optional
@@ -32,7 +32,44 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(32))
 command_manager = CommandManager()
 macro_manager = MacroManager()
 secure_storage = SecureStorage()
-ssh_clients: Dict[str, SSHClient] = {}  # Store SSH clients by session ID
+
+# Connection manager with automatic cleanup
+class ConnectionManager:
+    def __init__(self):
+        self.connections = {}
+        self.last_activity = {}
+        
+    def add_connection(self, session_id, client):
+        self.connections[session_id] = client
+        self.last_activity[session_id] = datetime.now()
+        
+    def get_connection(self, session_id):
+        if session_id in self.connections:
+            self.last_activity[session_id] = datetime.now()
+            return self.connections[session_id]
+        return None
+        
+    def remove_connection(self, session_id):
+        if session_id in self.connections:
+            try:
+                self.connections[session_id].disconnect()
+            except:
+                pass
+            del self.connections[session_id]
+            if session_id in self.last_activity:
+                del self.last_activity[session_id]
+                
+    def cleanup_inactive(self, timeout_minutes=30):
+        """Remove inactive connections"""
+        cutoff = datetime.now() - timedelta(minutes=timeout_minutes)
+        inactive_sessions = [
+            sid for sid, last_time in self.last_activity.items()
+            if last_time < cutoff
+        ]
+        for sid in inactive_sessions:
+            self.remove_connection(sid)
+
+connection_manager = ConnectionManager()
 
 # Setup logging
 setup_logging()
@@ -135,7 +172,7 @@ def connect():
             success = ssh_client.connect(hostname, username, password, port)
             
             if success:
-                ssh_clients[session_id] = ssh_client
+                connection_manager.add_connection(session_id, ssh_client)
                 session['connected'] = True
                 session['host'] = hostname
                 session['connection_type'] = connection_type
@@ -159,9 +196,7 @@ def disconnect():
     """Disconnect from device"""
     try:
         session_id = session.get('session_id')
-        if session_id in ssh_clients:
-            ssh_clients[session_id].disconnect()
-            del ssh_clients[session_id]
+        connection_manager.remove_connection(session_id)
         
         session['connected'] = False
         session['host'] = None
@@ -182,10 +217,13 @@ def execute_command():
             
         session_id = session.get('session_id')
         
-        if not session.get('connected') or session_id not in ssh_clients:
+        if not session.get('connected'):
             return jsonify({'success': False, 'error': 'Нет подключения к устройству'})
         
-        ssh_client = ssh_clients[session_id]
+        ssh_client = connection_manager.get_connection(session_id)
+        if not ssh_client:
+            return jsonify({'success': False, 'error': 'Нет активного подключения'})
+        
         command = data['command'].strip()
         
         # Валидация команды
@@ -229,10 +267,13 @@ def execute_macro():
         data = request.json
         session_id = session.get('session_id')
         
-        if not session.get('connected') or session_id not in ssh_clients:
+        if not session.get('connected'):
             return jsonify({'success': False, 'error': 'Нет подключения к устройству'})
         
-        ssh_client = ssh_clients[session_id]
+        ssh_client = connection_manager.get_connection(session_id)
+        if not ssh_client:
+            return jsonify({'success': False, 'error': 'Нет активного подключения'})
+        
         macro_name = data['macro_name']
         
         # Get macro
@@ -453,10 +494,9 @@ def get_ports_status():
             ]
         else:
             # Get data from real device
-            if session_id not in ssh_clients:
+            ssh_client = connection_manager.get_connection(session_id)
+            if not ssh_client:
                 return jsonify({'success': False, 'error': 'Нет активного подключения'})
-            
-            ssh_client = ssh_clients[session_id]
             
             # Execute commands to get interface status
             try:
@@ -499,10 +539,9 @@ def get_vlan_status():
             ]
         else:
             # Get data from real device
-            if session_id not in ssh_clients:
+            ssh_client = connection_manager.get_connection(session_id)
+            if not ssh_client:
                 return jsonify({'success': False, 'error': 'Нет активного подключения'})
-            
-            ssh_client = ssh_clients[session_id]
             
             # Execute commands to get VLAN status
             try:

@@ -1,0 +1,208 @@
+2025-08-14 17:05:13,926 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:05:13,929 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:05:13,930 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:05:13,932 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:05:13,933 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:05:13,985 - __main__ - INFO - <module>:625 - Starting Cisco Translator Web Application
+2025-08-14 17:05:15,949 - werkzeug - INFO - _log:97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.57:5000
+2025-08-14 17:05:15,953 - werkzeug - INFO - _log:97 - [33mPress CTRL+C to quit[0m
+2025-08-14 17:05:15,969 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-08-14 17:05:19,773 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:05:19,775 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:05:19,777 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:05:19,778 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:05:19,779 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:05:19,832 - __main__ - INFO - <module>:625 - Starting Cisco Translator Web Application
+2025-08-14 17:05:19,953 - werkzeug - WARNING - _log:97 -  * Debugger is active!
+2025-08-14 17:05:19,992 - werkzeug - INFO - _log:97 -  * Debugger PIN: 962-167-418
+2025-08-14 17:06:08,709 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:08] "GET / HTTP/1.1" 200 -
+2025-08-14 17:06:09,929 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:09] "GET /api/categories HTTP/1.1" 200 -
+2025-08-14 17:06:09,951 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:09] "GET /api/macros HTTP/1.1" 200 -
+2025-08-14 17:06:10,142 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:10] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:06:10,204 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:10] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-14 17:06:39,715 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:39] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:06:52,920 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:06:52] "GET /api/commands/Cisco%20-%20Настройка%20устройств HTTP/1.1" 200 -
+2025-08-14 17:07:10,008 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:07:10] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:07:40,054 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:07:40] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:08:10,496 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:08:10] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:08:40,566 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:08:40] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:09:00,817 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:09:00] "GET /api/commands/Eltex%20-%20Команды%20отображения HTTP/1.1" 200 -
+2025-08-14 17:09:10,628 - werkzeug - INFO - _log:97 - 127.0.0.1 - - [14/Aug/2025 17:09:10] "GET /api/status HTTP/1.1" 200 -
+2025-08-14 17:10:54,325 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:10:54,328 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:10:54,329 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:10:54,330 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:10:54,332 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:10:54,333 - __main__ - INFO - main:25 - Starting Cisco Translator application
+2025-08-14 17:10:56,866 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 17:10:56,872 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 17:10:57,124 - gui.main_window - INFO - setup_ui:57 - UI setup completed
+2025-08-14 17:10:57,181 - __main__ - INFO - main:51 - GUI initialized successfully
+2025-08-14 17:25:16,505 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:25:16,506 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:25:16,507 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:25:16,508 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:25:16,510 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:25:16,512 - __main__ - INFO - main:25 - Starting Cisco Translator application
+2025-08-14 17:25:17,008 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 17:25:17,012 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 17:25:20,504 - root - ERROR - main:84 - Failed to start application: 'light'
+2025-08-14 17:25:58,151 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:25:58,152 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:25:58,153 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:25:58,154 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:25:58,156 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:25:58,157 - __main__ - INFO - main:25 - Starting Cisco Translator application
+2025-08-14 17:25:58,707 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 17:25:58,712 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 17:25:58,858 - gui.main_window - INFO - setup_ui:57 - UI setup completed
+2025-08-14 17:25:58,891 - __main__ - INFO - main:59 - GUI initialized successfully
+2025-08-14 17:33:39,344 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:33:39,347 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:33:39,349 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:33:39,350 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:33:39,352 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:33:39,354 - __main__ - INFO - main:576 - Starting Cisco Translator Flet application
+2025-08-14 17:33:39,359 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 17:33:39,363 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 17:33:39,583 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 17:33:39,593 - flet - INFO - start:61 - Starting up TCP server on localhost:65122
+2025-08-14 17:33:39,631 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 17:34:01,136 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:65122
+2025-08-14 17:34:01,137 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 17:34:01,142 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 17:34:01,145 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 17:34:06,974 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 17:38:41,354 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 17:38:41,355 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 17:38:41,356 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 17:38:41,357 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 17:38:41,358 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 17:38:41,361 - __main__ - INFO - main:25 - Starting Cisco Translator application
+2025-08-14 17:38:41,939 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 17:38:41,943 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 17:38:42,109 - gui.main_window - INFO - setup_ui:57 - UI setup completed
+2025-08-14 17:38:42,153 - __main__ - INFO - main:59 - GUI initialized successfully
+2025-08-14 18:03:55,416 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:03:55,418 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:03:55,419 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:03:55,421 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:03:55,424 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:03:55,427 - __main__ - INFO - main:24 - Starting Cisco Translator Flet application
+2025-08-14 18:03:55,435 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:03:55,437 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:03:55,439 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:03:55,441 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:03:55,444 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:03:55,446 - main_flet - INFO - main:574 - Starting Cisco Translator Flet application
+2025-08-14 18:03:55,452 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 18:03:55,457 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 18:03:55,723 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 18:03:55,737 - flet - INFO - start:61 - Starting up TCP server on localhost:60220
+2025-08-14 18:03:55,775 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 18:03:55,808 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:60220
+2025-08-14 18:03:55,810 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 18:03:55,817 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:03:55,820 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:03:56,697 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 18:03:56,958 - main_flet - INFO - load_commands:556 - Loaded 6 command categories
+2025-08-14 18:03:57,019 - main_flet - INFO - load_macros:564 - Loaded 26 macros
+2025-08-14 18:13:43,447 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:13:43,449 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:13:43,450 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:13:43,451 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:13:43,454 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:13:43,455 - __main__ - INFO - main:574 - Starting Cisco Translator Flet application
+2025-08-14 18:13:43,460 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 18:13:43,465 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 18:13:43,704 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 18:13:43,716 - flet - INFO - start:61 - Starting up TCP server on localhost:63409
+2025-08-14 18:13:43,756 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 18:13:43,787 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:63409
+2025-08-14 18:13:43,788 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 18:13:43,795 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:13:43,798 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:13:44,540 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 18:13:44,583 - __main__ - INFO - load_commands:556 - Loaded 6 command categories
+2025-08-14 18:13:44,586 - __main__ - INFO - load_macros:564 - Loaded 26 macros
+2025-08-14 18:21:02,617 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:21:02,619 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:21:02,620 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:21:02,620 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:21:02,621 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:21:02,622 - __main__ - INFO - main:24 - Starting Cisco Translator Flet application
+2025-08-14 18:21:02,627 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:21:02,628 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:21:02,629 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:21:02,630 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:21:02,634 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:21:02,636 - main_flet - INFO - main:574 - Starting Cisco Translator Flet application
+2025-08-14 18:21:02,640 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 18:21:02,643 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 18:21:03,103 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 18:21:03,114 - flet - INFO - start:61 - Starting up TCP server on localhost:63536
+2025-08-14 18:21:03,152 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 18:21:03,186 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:63536
+2025-08-14 18:21:03,188 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 18:21:03,194 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:21:03,200 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:21:04,055 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 18:21:04,122 - main_flet - INFO - load_commands:556 - Loaded 6 command categories
+2025-08-14 18:21:04,126 - main_flet - INFO - load_macros:564 - Loaded 26 macros
+2025-08-14 18:25:58,888 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:25:58,890 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:25:58,891 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:25:58,893 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:25:58,895 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:25:58,898 - __main__ - INFO - main:574 - Starting Cisco Translator Flet application
+2025-08-14 18:25:58,904 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 18:25:58,908 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 18:25:59,075 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 18:25:59,085 - flet - INFO - start:61 - Starting up TCP server on localhost:53770
+2025-08-14 18:25:59,114 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 18:25:59,140 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:53770
+2025-08-14 18:25:59,141 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 18:25:59,147 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:25:59,150 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:25:59,867 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 18:25:59,871 - __main__ - INFO - load_commands:556 - Loaded 6 command categories
+2025-08-14 18:25:59,873 - __main__ - INFO - load_macros:564 - Loaded 26 macros
+2025-08-14 18:33:06,340 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:33:06,342 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:33:06,343 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:33:06,344 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:33:06,346 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:33:06,348 - main - INFO - main:634 - Starting Cisco Translator Flet application
+2025-08-14 18:33:06,354 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 18:33:06,357 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 18:33:06,735 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 18:33:06,745 - flet - INFO - start:61 - Starting up TCP server on localhost:52000
+2025-08-14 18:33:06,779 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 18:33:06,807 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:52000
+2025-08-14 18:33:06,809 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 18:33:06,817 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:33:06,819 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:33:07,592 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 18:33:07,607 - main - INFO - load_commands:598 - Loaded 6 command categories
+2025-08-14 18:33:07,615 - main - INFO - load_macros:606 - Loaded 26 macros
+2025-08-14 18:35:31,876 - core.logger - INFO - setup_logging:104 - ==================================================
+2025-08-14 18:35:31,878 - core.logger - INFO - setup_logging:105 - Cisco Translator Application Started
+2025-08-14 18:35:31,879 - core.logger - INFO - setup_logging:106 - Log level: INFO
+2025-08-14 18:35:31,881 - core.logger - INFO - setup_logging:107 - Log directory: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\logs
+2025-08-14 18:35:31,883 - core.logger - INFO - setup_logging:108 - ==================================================
+2025-08-14 18:35:31,884 - main - INFO - main:634 - Starting Cisco Translator Flet application
+2025-08-14 18:35:31,890 - core.command_manager - INFO - load_commands:36 - Loaded 6 command categories
+2025-08-14 18:35:31,894 - core.macro_manager - INFO - load_macros:36 - Loaded 26 macros
+2025-08-14 18:35:32,330 - flet - INFO - __get_assets_dir_path:371 - Assets path configured: C:\Users\14072023pc\Desktop\IT\mat_sr\cisco_rus_configurator\assets
+2025-08-14 18:35:32,343 - flet - INFO - start:61 - Starting up TCP server on localhost:52053
+2025-08-14 18:35:32,378 - flet - INFO - app_async:171 - Flet app has started...
+2025-08-14 18:35:32,408 - flet - INFO - on_app_startup:131 - App URL: tcp://localhost:52053
+2025-08-14 18:35:32,409 - flet_desktop - INFO - __locate_and_unpack_flet_view:62 - Starting Flet View app...
+2025-08-14 18:35:32,416 - flet_desktop - INFO - __locate_and_unpack_flet_view:86 - Looking for Flet executable at: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:35:32,419 - flet_desktop - INFO - __locate_and_unpack_flet_view:88 - Flet View found in: C:\Users\14072023pc\AppData\Local\Programs\Python\Python313\Lib\site-packages\flet_desktop\app\flet\flet.exe
+2025-08-14 18:35:33,146 - flet - INFO - on_session_created:240 - App session started
+2025-08-14 18:35:33,150 - main - INFO - load_commands:598 - Loaded 6 command categories
+2025-08-14 18:35:33,153 - main - INFO - load_macros:606 - Loaded 26 macros

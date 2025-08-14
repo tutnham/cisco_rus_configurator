@@ -47,56 +47,97 @@ class MacroManager:
     def _create_default_macros(self) -> None:
         """Create default macros."""
         self.macros = {
-            "basic_info": {
-                "name": "Базовая информация",
-                "description": "Получить основную информацию об устройстве",
+            "🔍 Диагностика устройства": {
+                "name": "🔍 Диагностика устройства",
+                "description": "Получить основную информацию об устройстве и его состоянии",
                 "commands": [
                     "show version",
                     "show ip interface brief",
-                    "show running-config | include hostname"
+                    "show running-config | include hostname",
+                    "show clock",
+                    "show users"
                 ],
                 "created_date": "2025-01-01",
                 "author": "system"
             },
-            "interface_status": {
-                "name": "Статус интерфейсов",
-                "description": "Проверить состояние всех интерфейсов",
+            "🌐 Проверка интерфейсов": {
+                "name": "🌐 Проверка интерфейсов",
+                "description": "Полная диагностика состояния всех сетевых интерфейсов",
                 "commands": [
                     "show interfaces",
                     "show ip interface brief",
-                    "show interfaces status"
+                    "show interfaces status",
+                    "show interfaces description"
                 ],
                 "created_date": "2025-01-01",
                 "author": "system"
             },
-            "routing_info": {
-                "name": "Информация о маршрутизации",
-                "description": "Получить информацию о маршрутизации",
+            "🗺️ Анализ маршрутизации": {
+                "name": "🗺️ Анализ маршрутизации",
+                "description": "Получить полную информацию о маршрутизации и протоколах",
                 "commands": [
                     "show ip route",
                     "show ip protocols",
-                    "show arp"
+                    "show arp",
+                    "show ip route summary"
                 ],
                 "created_date": "2025-01-01",
                 "author": "system"
             },
-            "security_check": {
-                "name": "Проверка безопасности",
-                "description": "Проверить настройки безопасности",
+            "🔒 Аудит безопасности": {
+                "name": "🔒 Аудит безопасности",
+                "description": "Проверить настройки безопасности и доступа",
                 "commands": [
                     "show running-config | include username",
                     "show running-config | include enable",
                     "show running-config | include access-list",
-                    "show line"
+                    "show line",
+                    "show privilege"
                 ],
                 "created_date": "2025-01-01",
                 "author": "system"
             },
-            "save_config": {
-                "name": "Сохранить конфигурацию",
-                "description": "Сохранить текущую конфигурацию",
+            "💾 Сохранение конфигурации": {
+                "name": "💾 Сохранение конфигурации",
+                "description": "Сохранить текущую конфигурацию в энергонезависимую память",
                 "commands": [
                     "copy running-config startup-config"
+                ],
+                "created_date": "2025-01-01",
+                "author": "system"
+            },
+            "📊 Мониторинг производительности": {
+                "name": "📊 Мониторинг производительности",
+                "description": "Проверить загрузку CPU, память и общую производительность",
+                "commands": [
+                    "show processes cpu",
+                    "show memory",
+                    "show version | include uptime",
+                    "show environment"
+                ],
+                "created_date": "2025-01-01",
+                "author": "system"
+            },
+            "🔧 Быстрая настройка VLAN": {
+                "name": "🔧 Быстрая настройка VLAN",
+                "description": "Просмотр и анализ конфигурации VLAN",
+                "commands": [
+                    "show vlan brief",
+                    "show vlan",
+                    "show interfaces trunk",
+                    "show spanning-tree"
+                ],
+                "created_date": "2025-01-01",
+                "author": "system"
+            },
+            "🚨 Проверка логов и ошибок": {
+                "name": "🚨 Проверка логов и ошибок",
+                "description": "Анализ системных логов и сообщений об ошибках",
+                "commands": [
+                    "show logging",
+                    "show logging | include ERROR",
+                    "show logging | include WARNING",
+                    "show tech-support"
                 ],
                 "created_date": "2025-01-01",
                 "author": "system"

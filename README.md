@@ -161,12 +161,12 @@ pip install psycopg2-binary paramiko cryptography pyserial flask python-dotenv
 
 - `core/database.py` — работа с БД
 - `core/config_manager.py` — управление настройками
-- `main_postgres.py` — GUI версия
+- `main.py` — современная GUI версия на Flet
 - `web_app_postgres.py` — веб-версия
 
 ---
 
-## Запуск GUI приложения
+## Запуск GUI приложения (Flet)
 
 ### 1. Подготовка к запуску
 
@@ -285,7 +285,13 @@ sudo nano /etc/postgresql/14/main/pg_hba.conf
 pip install psycopg2-binary paramiko cryptography
 ```
 
-- **tkinter не найден**:
+- **Flet не установлен**:
+
+```bash
+pip install flet
+```
+
+- **Проблемы с зависимостями**:
 
 ```bash
 sudo apt install python3-tk  # Linux
