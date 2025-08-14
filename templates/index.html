@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cisco Translator</title>
+    <title>Cisco Translator - Веб-интерфейс</title>
     <style>
         * {
             margin: 0;
@@ -13,179 +13,90 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             color: #333;
-            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
         .header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
-            color: white;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
             margin-bottom: 20px;
-            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         .header h1 {
-            font-size: 2.5em;
+            color: #2c3e50;
+            text-align: center;
             margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 300;
         }
 
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.1em;
         }
 
         .main-content {
-            margin-bottom: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            background: white;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 15px 20px;
-            background: #ecf0f1;
-            color: #7f8c8d;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            border: none;
-            font-size: 16px;
-        }
-
-        .tab.active {
-            background: #3498db;
-            color: white;
-        }
-
-        .tab:hover:not(.active) {
-            background: #d5dbdb;
-        }
-
-        .tab-content {
-            display: none;
-            background: white;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .commands-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-        }
-
-        .monitoring-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-        }
-
-        .port-status {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            border-left: 4px solid #3498db;
-        }
-
-        .port-status.up {
-            border-left-color: #27ae60;
-        }
-
-        .port-status.down {
-            border-left-color: #e74c3c;
-        }
-
-        .vlan-item {
-            background: #e8f5e8;
-            padding: 8px 12px;
-            border-radius: 5px;
-            margin-bottom: 8px;
-            border-left: 3px solid #27ae60;
-        }
-
-        .connection-type-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
-        .connection-type-group label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            font-weight: normal;
-        }
-
-        .connection-fields {
-            display: none;
-        }
-
-        .connection-fields.active {
-            display: block;
-        }
-
-        .left-panel {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .right-panel {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .connection-panel {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
 
-        .status {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-align: center;
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .status.disconnected {
-            background: #ffebee;
-            color: #c62828;
+        .panel h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: 400;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
 
-        .status.connected {
-            background: #e8f5e8;
-            color: #2e7d32;
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #ecf0f1;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.connected {
+            background: #27ae60;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
         .form-group {
@@ -195,16 +106,17 @@
         .form-group label {
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
+            color: #2c3e50;
+            font-weight: 500;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
             font-size: 14px;
+            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus, .form-group select:focus {
@@ -213,156 +125,173 @@
         }
 
         .btn {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 12px 24px;
             border: none;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
         .btn:hover {
-            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
         }
 
         .btn:disabled {
-            background: #bdc3c7;
+            background: #95a5a6;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        .btn.danger {
-            background: #e74c3c;
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
         }
 
-        .btn.danger:hover {
-            background: #c0392b;
+        .btn-danger:hover {
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
         }
 
-        .btn.success {
-            background: #27ae60;
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #229954);
         }
 
-        .btn.success:hover {
-            background: #229954;
+        .btn-success:hover {
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
         }
 
-        .section-title {
-            font-size: 1.5em;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-        }
-
-        .command-list {
+        .command-list, .macro-list {
             max-height: 300px;
             overflow-y: auto;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
             margin-bottom: 15px;
         }
 
-        .command-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+        .command-item, .macro-item {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background-color 0.2s ease;
         }
 
-        .command-item:hover {
-            background: #f8f9fa;
+        .command-item:hover, .macro-item:hover {
+            background-color: #f8f9fa;
         }
 
-        .command-item.selected {
-            background: #3498db;
+        .command-item.selected, .macro-item.selected {
+            background-color: #3498db;
             color: white;
         }
 
-        .command-item:last-child {
+        .command-item:last-child, .macro-item:last-child {
             border-bottom: none;
         }
 
-        .output-panel {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            color: #7f8c8d;
+        }
+
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .output-area {
             background: #2c3e50;
             color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 14px;
-            min-height: 300px;
+            font-size: 13px;
+            line-height: 1.4;
             max-height: 400px;
             overflow-y: auto;
             white-space: pre-wrap;
-        }
-
-        .macro-list {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 2px solid #ddd;
-            border-radius: 5px;
             margin-bottom: 15px;
         }
 
-        .macro-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            transition: background 0.3s;
+        .output-area::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .macro-item:hover {
+        .output-area::-webkit-scrollbar-track {
+            background: #34495e;
+        }
+
+        .output-area::-webkit-scrollbar-thumb {
+            background: #7f8c8d;
+            border-radius: 4px;
+        }
+
+        .bottom-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .monitoring-panel {
             background: #f8f9fa;
-        }
-
-        .macro-item.selected {
-            background: #27ae60;
-            color: white;
-        }
-
-        .macro-item:last-child {
-            border-bottom: none;
-        }
-
-        .macro-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .macro-description {
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .loading {
-            text-align: center;
+            border-radius: 10px;
             padding: 20px;
-            color: #3498db;
         }
 
-        .error {
-            background: #ffebee;
-            color: #c62828;
-            padding: 10px;
-            border-radius: 5px;
+        .monitoring-panel h3 {
+            color: #2c3e50;
             margin-bottom: 15px;
+            font-size: 1.2em;
         }
 
-        .success {
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
+        .port-status, .vlan-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #bdc3c7;
+        }
+
+        .port-status.up, .vlan-status.active {
+            border-left-color: #27ae60;
+        }
+
+        .port-status.down {
+            border-left-color: #e74c3c;
         }
 
         .modal {
@@ -373,105 +302,48 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
             background-color: white;
             margin: 5% auto;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 15px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-
-        .modal-title {
-            font-size: 1.5em;
-            color: #2c3e50;
-            margin: 0;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .close {
             color: #aaa;
+            float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            line-height: 1;
         }
 
         .close:hover {
-            color: #e74c3c;
+            color: #000;
         }
 
-        .command-list-container {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 15px;
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: none;
         }
 
-        .command-input {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
         }
 
-        .command-input input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-
-        .command-input button {
-            padding: 8px 12px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .command-input button:hover {
-            background: #c0392b;
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-            margin-left: 5px;
-        }
-
-        .search-box {
-            margin-bottom: 15px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .management-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+        .alert-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
         }
 
         @media (max-width: 768px) {
@@ -479,1101 +351,785 @@
                 grid-template-columns: 1fr;
             }
             
-            .container {
-                padding: 10px;
+            .monitoring-grid {
+                grid-template-columns: 1fr;
             }
-
-            .modal-content {
-                width: 95%;
-                margin: 10% auto;
-                padding: 20px;
-            }
-
-            .management-buttons {
-                flex-direction: column;
+            
+            .header h1 {
+                font-size: 2em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <h1>Cisco Translator</h1>
-            <p>Интерфейс для работы с командами Cisco с русскими переводами</p>
+            <h1>🌐 Cisco Translator</h1>
+            <p>Веб-интерфейс для работы с Cisco CLI командами</p>
         </div>
 
-        <div class="connection-panel">
-            <div class="section-title">Подключение к устройству</div>
-            <div id="status" class="status disconnected">Не подключено</div>
-            
-            <div id="connectionForm">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Connection Panel -->
+            <div class="panel">
+                <h2>🔌 Подключение к устройству</h2>
+                
+                <div class="connection-status">
+                    <div class="status-indicator" id="statusIndicator"></div>
+                    <span id="statusText">Не подключено</span>
+                </div>
+
                 <div class="form-group">
                     <label>Тип подключения:</label>
-                    <div class="connection-type-group">
-                        <label>
-                            <input type="radio" name="connectionType" value="ssh" checked>
-                            SSH
-                        </label>
-                        <label>
-                            <input type="radio" name="connectionType" value="telnet">
-                            Telnet
-                        </label>
-                        <label>
-                            <input type="radio" name="connectionType" value="serial">
-                            COM порт
-                        </label>
+                    <select id="connectionType">
+                        <option value="ssh">SSH</option>
+                        <option value="telnet">Telnet</option>
+                        <option value="serial">COM порт</option>
+                    </select>
+                </div>
+
+                <div id="networkFields">
+                    <div class="form-group">
+                        <label>IP адрес:</label>
+                        <input type="text" id="hostInput" placeholder="192.168.1.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Порт:</label>
+                        <input type="number" id="portInput" value="22">
+                    </div>
+                    <div class="form-group">
+                        <label>Имя пользователя:</label>
+                        <input type="text" id="usernameInput" placeholder="admin">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль:</label>
+                        <input type="password" id="passwordInput" placeholder="••••••••">
                     </div>
                 </div>
 
-                <div id="networkFields" class="connection-fields active">
+                <div id="serialFields" style="display: none;">
                     <div class="form-group">
-                        <label for="host">IP адрес или имя хоста:</label>
-                        <input type="text" id="host" placeholder="192.168.1.1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Имя пользователя:</label>
-                        <input type="text" id="username" placeholder="admin" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль:</label>
-                        <input type="password" id="password" placeholder="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="port">Порт:</label>
-                        <input type="number" id="port" value="22" min="1" max="65535">
-                    </div>
-                </div>
-
-                <div id="serialFields" class="connection-fields">
-                    <div class="form-group">
-                        <label for="comPort">COM порт:</label>
-                        <select id="comPort">
-                            <option value="">Выберите порт</option>
+                        <label>COM порт:</label>
+                        <select id="comPortSelect">
+                            <option value="COM1">COM1</option>
+                            <option value="COM2">COM2</option>
+                            <option value="COM3">COM3</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="baudRate">Скорость:</label>
-                        <select id="baudRate">
+                        <label>Скорость (бод):</label>
+                        <select id="baudrateSelect">
                             <option value="9600">9600</option>
                             <option value="19200">19200</option>
                             <option value="38400">38400</option>
                             <option value="57600">57600</option>
-                            <option value="115200" selected>115200</option>
+                            <option value="115200">115200</option>
                         </select>
                     </div>
                 </div>
 
-                <button id="connectBtn" class="btn">Подключиться</button>
-                <button id="disconnectBtn" class="btn danger" style="display: none;">Отключиться</button>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('commands')">Команды и макросы</button>
-                <button class="tab" onclick="switchTab('monitoring')">Мониторинг устройства</button>
+                <button class="btn" id="connectBtn" onclick="connect()">Подключиться</button>
+                <button class="btn btn-danger" id="disconnectBtn" onclick="disconnect()" disabled>Отключиться</button>
             </div>
 
-            <div id="commandsTab" class="tab-content active">
-                <div class="commands-grid">
-                    <div class="left-panel">
-                        <div class="section-title">Доступные команды</div>
-                        
-                        <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Поиск команд...">
-                        </div>
-
-                        <div class="management-buttons">
-                            <button id="addCommandBtn" class="btn btn-small">Добавить команду</button>
-                            <button id="removeCommandBtn" class="btn btn-small danger" disabled>Удалить команду</button>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="categorySelect">Категория:</label>
-                            <select id="categorySelect">
-                                <option value="">Загрузка...</option>
-                            </select>
-                        </div>
-
-                        <div id="commandList" class="command-list">
-                            <div class="loading">Выберите категорию</div>
-                        </div>
-
-                        <button id="executeBtn" class="btn success" disabled>Выполнить команду</button>
-                    </div>
-
-                    <div class="right-panel">
-                        <div class="section-title">Макросы</div>
-                        
-                        <div class="management-buttons">
-                            <button id="addMacroBtn" class="btn btn-small">Создать макрос</button>
-                            <button id="editMacroBtn" class="btn btn-small" disabled>Редактировать</button>
-                            <button id="deleteMacroBtn" class="btn btn-small danger" disabled>Удалить</button>
-                        </div>
-
-                        <div id="macroList" class="macro-list">
-                            <div class="loading">Загрузка макросов...</div>
-                        </div>
-
-                        <button id="executeMacroBtn" class="btn success" disabled>Выполнить макрос</button>
-                    </div>
+            <!-- Commands Panel -->
+            <div class="panel">
+                <h2>📋 Команды и макросы</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('commands')">Команды</div>
+                    <div class="tab" onclick="switchTab('macros')">Макросы</div>
+                    <div class="tab" onclick="switchTab('custom')">Пользовательские</div>
                 </div>
-            </div>
 
-            <div id="monitoringTab" class="tab-content">
-                <div class="monitoring-grid">
-                    <div class="left-panel">
-                        <div class="section-title">Состояние портов</div>
-                        <div class="management-buttons">
-                            <button id="refreshPortsBtn" class="btn btn-small">Обновить данные</button>
-                            <button id="autoRefreshBtn" class="btn btn-small">Авто-обновление</button>
-                        </div>
-                        <div id="portsContainer">
-                            <div class="loading">Подключитесь к устройству для просмотра портов</div>
-                        </div>
+                <!-- Commands Tab -->
+                <div id="commandsTab" class="tab-content active">
+                    <div class="form-group">
+                        <label>Категория:</label>
+                        <select id="categorySelect" onchange="loadCommands()">
+                            <option value="">Выберите категорию...</option>
+                        </select>
                     </div>
+                    <div class="command-list" id="commandList"></div>
+                    <button class="btn btn-success" onclick="executeCommand()" disabled id="executeBtn">Выполнить команду</button>
+                </div>
 
-                    <div class="right-panel">
-                        <div class="section-title">Активные VLAN</div>
-                        <div class="management-buttons">
-                            <button id="refreshVlanBtn" class="btn btn-small">Обновить VLAN</button>
-                        </div>
-                        <div id="vlanContainer">
-                            <div class="loading">Подключитесь к устройству для просмотра VLAN</div>
-                        </div>
+                <!-- Macros Tab -->
+                <div id="macrosTab" class="tab-content">
+                    <div class="macro-list" id="macroList"></div>
+                    <button class="btn btn-success" onclick="executeMacro()" disabled id="executeMacroBtn">Выполнить макрос</button>
+                    <button class="btn" onclick="showAddMacroModal()">Создать макрос</button>
+                </div>
+
+                <!-- Custom Tab -->
+                <div id="customTab" class="tab-content">
+                    <div class="form-group">
+                        <label>Пользовательская команда:</label>
+                        <input type="text" id="customCommand" placeholder="show version">
                     </div>
+                    <button class="btn btn-success" onclick="executeCustomCommand()">Выполнить</button>
+                    <button class="btn" onclick="showAddCommandModal()">Добавить команду</button>
                 </div>
             </div>
         </div>
 
-        <div class="output-panel">
-            <div class="section-title">Вывод команд</div>
-            <div id="output" class="output-area">Добро пожаловать в Cisco Translator!\nПодключитесь к устройству и выберите команду для выполнения.</div>
+        <!-- Output Panel -->
+        <div class="bottom-panel">
+            <h2>💻 Вывод команд</h2>
+            <div class="output-area" id="outputArea">Добро пожаловать в Cisco Translator!
+Выберите команду и подключитесь к устройству для начала работы.</div>
+            <button class="btn" onclick="clearOutput()">Очистить вывод</button>
+            <button class="btn" onclick="exportOutput()">Экспорт в файл</button>
+
+            <!-- Device Monitoring -->
+            <div class="monitoring-grid">
+                <div class="monitoring-panel">
+                    <h3>🔌 Статус портов</h3>
+                    <div id="portsStatus">
+                        <div class="port-status">
+                            <span>Нет данных</span>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="refreshPortsStatus()">Обновить</button>
+                </div>
+                
+                <div class="monitoring-panel">
+                    <h3>🏷️ Статус VLAN</h3>
+                    <div id="vlanStatus">
+                        <div class="vlan-status">
+                            <span>Нет данных</span>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="refreshVlanStatus()">Обновить</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Modal for adding commands -->
+    <!-- Alerts -->
+    <div class="alert alert-success" id="successAlert"></div>
+    <div class="alert alert-error" id="errorAlert"></div>
+
+    <!-- Add Command Modal -->
     <div id="addCommandModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Добавить команду</h2>
-                <span class="close" onclick="closeModal('addCommandModal')">&times;</span>
+            <span class="close" onclick="closeModal('addCommandModal')">&times;</span>
+            <h2>Добавить команду</h2>
+            <div class="form-group">
+                <label>Категория:</label>
+                <input type="text" id="newCommandCategory" placeholder="show_commands">
             </div>
             <div class="form-group">
-                <label for="commandCategory">Категория:</label>
-                <select id="commandCategory">
-                    <option value="">Выберите категорию</option>
-                </select>
+                <label>Команда:</label>
+                <input type="text" id="newCommandText" placeholder="show version">
             </div>
             <div class="form-group">
-                <label for="commandText">Команда:</label>
-                <input type="text" id="commandText" placeholder="show version" required>
+                <label>Описание:</label>
+                <input type="text" id="newCommandDescription" placeholder="Показать версию ПО">
             </div>
-            <div class="form-group">
-                <label for="commandDescription">Описание (на русском):</label>
-                <input type="text" id="commandDescription" placeholder="Показать версию устройства" required>
-            </div>
-            <button id="saveCommandBtn" class="btn">Сохранить команду</button>
+            <button class="btn btn-success" onclick="addCommand()">Добавить</button>
+            <button class="btn" onclick="closeModal('addCommandModal')">Отмена</button>
         </div>
     </div>
 
-    <!-- Modal for adding/editing macros -->
-    <div id="macroModal" class="modal">
+    <!-- Add Macro Modal -->
+    <div id="addMacroModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="macroModalTitle" class="modal-title">Создать макрос</h2>
-                <span class="close" onclick="closeModal('macroModal')">&times;</span>
+            <span class="close" onclick="closeModal('addMacroModal')">&times;</span>
+            <h2>Создать макрос</h2>
+            <div class="form-group">
+                <label>Название:</label>
+                <input type="text" id="newMacroName" placeholder="my_macro">
             </div>
             <div class="form-group">
-                <label for="macroName">Название макроса:</label>
-                <input type="text" id="macroName" placeholder="Базовая диагностика" required>
+                <label>Описание:</label>
+                <input type="text" id="newMacroDescription" placeholder="Описание макроса">
             </div>
             <div class="form-group">
-                <label for="macroDescription">Описание:</label>
-                <input type="text" id="macroDescription" placeholder="Выполняет базовую диагностику устройства" required>
+                <label>Команды (по одной на строку):</label>
+                <textarea id="newMacroCommands" rows="5" placeholder="show version&#10;show ip interface brief"></textarea>
             </div>
-            <div class="form-group">
-                <label>Команды макроса:</label>
-                <div id="macroCommands" class="command-list-container">
-                    <!-- Commands will be added here dynamically -->
-                </div>
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <input type="text" id="newMacroCommand" placeholder="Введите команду" style="flex: 1;">
-                    <button id="addMacroCommandBtn" class="btn btn-small">Добавить</button>
-                </div>
-            </div>
-            <button id="saveMacroBtn" class="btn">Сохранить макрос</button>
+            <button class="btn btn-success" onclick="addMacro()">Создать</button>
+            <button class="btn" onclick="closeModal('addMacroModal')">Отмена</button>
         </div>
     </div>
 
     <script>
-        // Global variables
         let selectedCommand = null;
         let selectedMacro = null;
-        let connected = false;
-        let currentMacroCommands = [];
-        let editingMacro = null;
-        let autoRefreshInterval = null;
-        let connectionType = 'ssh';
+        let isConnected = false;
 
-        // DOM elements
-        const statusDiv = document.getElementById('status');
-        const connectBtn = document.getElementById('connectBtn');
-        const disconnectBtn = document.getElementById('disconnectBtn');
-        const categorySelect = document.getElementById('categorySelect');
-        const commandList = document.getElementById('commandList');
-        const executeBtn = document.getElementById('executeBtn');
-        const macroList = document.getElementById('macroList');
-        const executeMacroBtn = document.getElementById('executeMacroBtn');
-        const output = document.getElementById('output');
-        const searchInput = document.getElementById('searchInput');
-        const addCommandBtn = document.getElementById('addCommandBtn');
-        const removeCommandBtn = document.getElementById('removeCommandBtn');
-        const addMacroBtn = document.getElementById('addMacroBtn');
-        const editMacroBtn = document.getElementById('editMacroBtn');
-        const deleteMacroBtn = document.getElementById('deleteMacroBtn');
-
-        // Initialize app
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             loadCategories();
             loadMacros();
+            updateConnectionType();
             checkStatus();
         });
 
-        // Event listeners
-        connectBtn.addEventListener('click', connect);
-        disconnectBtn.addEventListener('click', disconnect);
-        categorySelect.addEventListener('change', loadCommands);
-        executeBtn.addEventListener('click', executeCommand);
-        executeMacroBtn.addEventListener('click', executeMacro);
-        searchInput.addEventListener('input', searchCommands);
-        addCommandBtn.addEventListener('click', () => openAddCommandModal());
-        removeCommandBtn.addEventListener('click', removeSelectedCommand);
-        addMacroBtn.addEventListener('click', () => openMacroModal());
-        editMacroBtn.addEventListener('click', () => openMacroModal(true));
-        deleteMacroBtn.addEventListener('click', deleteSelectedMacro);
-        document.getElementById('saveCommandBtn').addEventListener('click', saveCommand);
-        document.getElementById('saveMacroBtn').addEventListener('click', saveMacro);
-        document.getElementById('addMacroCommandBtn').addEventListener('click', addMacroCommand);
-        
-        // Connection type change listeners
-        document.querySelectorAll('input[name="connectionType"]').forEach(radio => {
-            radio.addEventListener('change', handleConnectionTypeChange);
-        });
-        
-        // Monitoring listeners
-        document.getElementById('refreshPortsBtn').addEventListener('click', refreshPortsStatus);
-        document.getElementById('refreshVlanBtn').addEventListener('click', refreshVlanStatus);
-        document.getElementById('autoRefreshBtn').addEventListener('click', toggleAutoRefresh);
+        // Connection type change handler
+        document.getElementById('connectionType').addEventListener('change', updateConnectionType);
 
-        // Load categories
-        function loadCategories() {
-            fetch('/api/categories')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        categorySelect.innerHTML = '<option value="">Выберите категорию</option>';
-                        data.categories.forEach(category => {
-                            const option = document.createElement('option');
-                            option.value = category;
-                            option.textContent = category;
-                            categorySelect.appendChild(option);
-                        });
-                    } else {
-                        showError('Ошибка загрузки категорий: ' + data.error);
-                    }
-                })
-                .catch(error => {
-                    showError('Ошибка загрузки категорий: ' + error.message);
-                });
-        }
+        function updateConnectionType() {
+            const type = document.getElementById('connectionType').value;
+            const networkFields = document.getElementById('networkFields');
+            const serialFields = document.getElementById('serialFields');
+            const portInput = document.getElementById('portInput');
 
-        // Load commands for selected category
-        function loadCommands() {
-            const category = categorySelect.value;
-            if (!category) {
-                commandList.innerHTML = '<div class="loading">Выберите категорию</div>';
-                return;
+            if (type === 'serial') {
+                networkFields.style.display = 'none';
+                serialFields.style.display = 'block';
+            } else {
+                networkFields.style.display = 'block';
+                serialFields.style.display = 'none';
+                portInput.value = type === 'ssh' ? '22' : '23';
             }
-
-            commandList.innerHTML = '<div class="loading">Загрузка команд...</div>';
-
-            fetch(`/api/commands/${encodeURIComponent(category)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        commandList.innerHTML = '';
-                        data.commands.forEach(command => {
-                            const div = document.createElement('div');
-                            div.className = 'command-item';
-                            div.textContent = command.description;
-                            div.dataset.command = command.command;
-                            div.addEventListener('click', () => selectCommand(div, command));
-                            commandList.appendChild(div);
-                        });
-                    } else {
-                        showError('Ошибка загрузки команд: ' + data.error);
-                    }
-                })
-                .catch(error => {
-                    showError('Ошибка загрузки команд: ' + error.message);
-                });
         }
 
-        // Load macros
-        function loadMacros() {
-            fetch('/api/macros')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        macroList.innerHTML = '';
-                        Object.entries(data.macros).forEach(([key, macro]) => {
-                            const div = document.createElement('div');
-                            div.className = 'macro-item';
-                            div.innerHTML = `
-                                <div class="macro-name">${macro.name}</div>
-                                <div class="macro-description">${macro.description}</div>
-                            `;
-                            div.dataset.macroKey = key;
-                            div.addEventListener('click', () => selectMacro(div, key, macro));
-                            macroList.appendChild(div);
-                        });
-                    } else {
-                        showError('Ошибка загрузки макросов: ' + data.error);
-                    }
-                })
-                .catch(error => {
-                    showError('Ошибка загрузки макросов: ' + error.message);
-                });
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
         }
 
-        // Select command
-        function selectCommand(element, command) {
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/categories');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const select = document.getElementById('categorySelect');
+                    select.innerHTML = '<option value="">Выберите категорию...</option>';
+                    
+                    data.categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category;
+                        option.textContent = category;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                showError('Ошибка загрузки категорий: ' + error.message);
+            }
+        }
+
+        async function loadCommands() {
+            const category = document.getElementById('categorySelect').value;
+            if (!category) return;
+
+            try {
+                const response = await fetch(`/api/commands/${encodeURIComponent(category)}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const list = document.getElementById('commandList');
+                    list.innerHTML = '';
+                    
+                    data.commands.forEach((cmd, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'command-item';
+                        item.textContent = cmd.description;
+                        item.onclick = () => selectCommand(index, cmd);
+                        list.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                showError('Ошибка загрузки команд: ' + error.message);
+            }
+        }
+
+        async function loadMacros() {
+            try {
+                const response = await fetch('/api/macros');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const list = document.getElementById('macroList');
+                    list.innerHTML = '';
+                    
+                    Object.entries(data.macros).forEach(([name, macro]) => {
+                        const item = document.createElement('div');
+                        item.className = 'macro-item';
+                        item.innerHTML = `<strong>${macro.name}</strong><br><small>${macro.description}</small>`;
+                        item.onclick = () => selectMacro(name, macro);
+                        list.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                showError('Ошибка загрузки макросов: ' + error.message);
+            }
+        }
+
+        function selectCommand(index, command) {
             // Remove previous selection
             document.querySelectorAll('.command-item').forEach(item => {
                 item.classList.remove('selected');
             });
             
             // Select current item
-            element.classList.add('selected');
+            document.querySelectorAll('.command-item')[index].classList.add('selected');
             selectedCommand = command;
-            executeBtn.disabled = !connected;
-            removeCommandBtn.disabled = false;
+            document.getElementById('executeBtn').disabled = !isConnected;
         }
 
-        // Select macro
-        function selectMacro(element, key, macro) {
+        function selectMacro(name, macro) {
             // Remove previous selection
             document.querySelectorAll('.macro-item').forEach(item => {
                 item.classList.remove('selected');
             });
             
             // Select current item
-            element.classList.add('selected');
-            selectedMacro = {key: key, macro: macro};
-            executeMacroBtn.disabled = !connected;
-            editMacroBtn.disabled = false;
-            deleteMacroBtn.disabled = false;
+            event.target.classList.add('selected');
+            selectedMacro = { name, ...macro };
+            document.getElementById('executeMacroBtn').disabled = !isConnected;
         }
 
-        // Switch tabs
-        function switchTab(tabName) {
-            // Remove active class from all tabs and content
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            // Add active class to selected tab and content
-            event.target.classList.add('active');
-            document.getElementById(tabName + 'Tab').classList.add('active');
-        }
-
-        // Handle connection type change
-        function handleConnectionTypeChange(event) {
-            connectionType = event.target.value;
-            
-            // Hide all connection fields
-            document.querySelectorAll('.connection-fields').forEach(field => {
-                field.classList.remove('active');
-            });
-            
-            // Show appropriate fields
-            if (connectionType === 'serial') {
-                document.getElementById('serialFields').classList.add('active');
-                loadComPorts();
-            } else {
-                document.getElementById('networkFields').classList.add('active');
-                // Update default port
-                const portInput = document.getElementById('port');
-                if (connectionType === 'ssh') {
-                    portInput.value = '22';
-                } else if (connectionType === 'telnet') {
-                    portInput.value = '23';
-                }
-            }
-        }
-
-        // Load available COM ports
-        function loadComPorts() {
-            fetch('/api/com_ports')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const comPortSelect = document.getElementById('comPort');
-                        comPortSelect.innerHTML = '<option value="">Выберите порт</option>';
-                        data.ports.forEach(port => {
-                            const option = document.createElement('option');
-                            option.value = port;
-                            option.textContent = port;
-                            comPortSelect.appendChild(option);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading COM ports:', error);
-                });
-        }
-
-        // Connect to device
-        function connect() {
-            connectBtn.disabled = true;
-            connectBtn.textContent = 'Подключение...';
-
+        async function connect() {
+            const type = document.getElementById('connectionType').value;
             let connectionData;
-            
-            if (connectionType === 'serial') {
-                const comPort = document.getElementById('comPort').value;
-                const baudRate = document.getElementById('baudRate').value;
-                
-                if (!comPort) {
-                    showError('Выберите COM порт');
-                    connectBtn.disabled = false;
-                    connectBtn.textContent = 'Подключиться';
-                    return;
-                }
-                
+
+            if (type === 'serial') {
                 connectionData = {
                     type: 'serial',
-                    port: comPort,
-                    baudrate: parseInt(baudRate)
+                    port: document.getElementById('comPortSelect').value,
+                    baudrate: parseInt(document.getElementById('baudrateSelect').value)
                 };
             } else {
-                const host = document.getElementById('host').value;
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                const port = document.getElementById('port').value;
-
-                if (!host || !username || !password) {
-                    showError('Заполните все поля');
-                    connectBtn.disabled = false;
-                    connectBtn.textContent = 'Подключиться';
-                    return;
-                }
-
                 connectionData = {
-                    type: connectionType,
-                    host: host,
-                    username: username,
-                    password: password,
-                    port: parseInt(port)
+                    type: type,
+                    host: document.getElementById('hostInput').value,
+                    port: parseInt(document.getElementById('portInput').value),
+                    username: document.getElementById('usernameInput').value,
+                    password: document.getElementById('passwordInput').value
                 };
             }
 
-            fetch('/api/connect', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(connectionData)
-            })
-            .then(response => response.json())
-            .then(data => {
+            try {
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('connectBtn').textContent = 'Подключение...';
+
+                const response = await fetch('/api/connect', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(connectionData)
+                });
+
+                const data = await response.json();
+                
                 if (data.success) {
-                    connected = true;
-                    statusDiv.textContent = data.message;
-                    statusDiv.className = 'status connected';
-                    connectBtn.style.display = 'none';
-                    disconnectBtn.style.display = 'inline-block';
+                    isConnected = true;
+                    updateConnectionStatus(true, data.message);
+                    showSuccess(data.message);
                     
-                    if (selectedCommand) executeBtn.disabled = false;
-                    if (selectedMacro) executeMacroBtn.disabled = false;
-                    
-                    addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
-                    
-                    // Auto-load monitoring data if on monitoring tab
-                    if (document.getElementById('monitoringTab').classList.contains('active')) {
-                        refreshPortsStatus();
-                        refreshVlanStatus();
-                    }
+                    // Enable command execution buttons
+                    if (selectedCommand) document.getElementById('executeBtn').disabled = false;
+                    if (selectedMacro) document.getElementById('executeMacroBtn').disabled = false;
                 } else {
                     showError(data.error);
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 showError('Ошибка подключения: ' + error.message);
-            })
-            .finally(() => {
-                connectBtn.disabled = false;
-                connectBtn.textContent = 'Подключиться';
-            });
-        }
-
-        // Disconnect from device
-        function disconnect() {
-            fetch('/api/disconnect', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                connected = false;
-                statusDiv.textContent = 'Не подключено';
-                statusDiv.className = 'status disconnected';
-                connectBtn.style.display = 'inline-block';
-                disconnectBtn.style.display = 'none';
-                
-                executeBtn.disabled = true;
-                executeMacroBtn.disabled = true;
-                
-                addToOutput(`[${new Date().toLocaleTimeString()}] Отключено от устройства`);
-            })
-            .catch(error => {
-                showError('Ошибка отключения: ' + error.message);
-            });
-        }
-
-        // Execute selected command
-        function executeCommand() {
-            if (!selectedCommand || !connected) {
-                showError('Выберите команду и подключитесь к устройству');
-                return;
+            } finally {
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('connectBtn').textContent = 'Подключиться';
             }
+        }
 
-            executeBtn.disabled = true;
-            executeBtn.textContent = 'Выполнение...';
+        async function disconnect() {
+            try {
+                const response = await fetch('/api/disconnect', {
+                    method: 'POST'
+                });
 
-            fetch('/api/execute', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    command: selectedCommand.command
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
+                const data = await response.json();
+                
                 if (data.success) {
-                    addToOutput(`[${data.timestamp}] Команда: ${data.command}`);
-                    addToOutput(`Результат:\n${data.result}`);
-                    addToOutput('---');
+                    isConnected = false;
+                    updateConnectionStatus(false, 'Не подключено');
+                    showSuccess(data.message);
+                    
+                    // Disable command execution buttons
+                    document.getElementById('executeBtn').disabled = true;
+                    document.getElementById('executeMacroBtn').disabled = true;
+                }
+            } catch (error) {
+                showError('Ошибка отключения: ' + error.message);
+            }
+        }
+
+        async function executeCommand() {
+            if (!selectedCommand || !isConnected) return;
+
+            try {
+                const response = await fetch('/api/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        command: selectedCommand.command,
+                        description: selectedCommand.description
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    appendOutput(`[${data.timestamp}] ${selectedCommand.description}\n`);
+                    appendOutput(`Команда: ${data.command}\n`);
+                    appendOutput(`Результат:\n${data.result}\n`);
+                    appendOutput('-'.repeat(50) + '\n');
                 } else {
                     showError(data.error);
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 showError('Ошибка выполнения команды: ' + error.message);
-            })
-            .finally(() => {
-                executeBtn.disabled = false;
-                executeBtn.textContent = 'Выполнить команду';
-            });
+            }
         }
 
-        // Execute selected macro
-        function executeMacro() {
-            if (!selectedMacro || !connected) {
-                showError('Выберите макрос и подключитесь к устройству');
+        async function executeMacro() {
+            if (!selectedMacro || !isConnected) return;
+
+            try {
+                const response = await fetch('/api/execute_macro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        macro_name: selectedMacro.name
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    appendOutput(`[${data.timestamp}] Выполнение макроса: ${data.macro_name}\n`);
+                    
+                    data.results.forEach(result => {
+                        appendOutput(`\nКоманда: ${result.command}\n`);
+                        if (result.success) {
+                            appendOutput(`Результат:\n${result.result}\n`);
+                        } else {
+                            appendOutput(`Ошибка: ${result.result}\n`);
+                        }
+                        appendOutput('-'.repeat(30) + '\n');
+                    });
+                    
+                    appendOutput(`Макрос ${data.macro_name} выполнен\n`);
+                    appendOutput('='.repeat(50) + '\n');
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError('Ошибка выполнения макроса: ' + error.message);
+            }
+        }
+
+        async function executeCustomCommand() {
+            const command = document.getElementById('customCommand').value.trim();
+            if (!command || !isConnected) return;
+
+            try {
+                const response = await fetch('/api/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        command: command,
+                        description: 'Пользовательская команда'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    appendOutput(`[${data.timestamp}] Пользовательская команда\n`);
+                    appendOutput(`Команда: ${data.command}\n`);
+                    appendOutput(`Результат:\n${data.result}\n`);
+                    appendOutput('-'.repeat(50) + '\n');
+                    
+                    // Clear the input
+                    document.getElementById('customCommand').value = '';
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError('Ошибка выполнения команды: ' + error.message);
+            }
+        }
+
+        async function refreshPortsStatus() {
+            if (!isConnected) {
+                showError('Нет подключения к устройству');
                 return;
             }
 
-            executeMacroBtn.disabled = true;
-            executeMacroBtn.textContent = 'Выполнение...';
+            try {
+                const response = await fetch('/api/get_ports_status', {
+                    method: 'POST'
+                });
 
-            fetch('/api/execute_macro', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    macro_name: selectedMacro.key
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
+                const data = await response.json();
+                
                 if (data.success) {
-                    addToOutput(`[${data.timestamp}] Макрос: ${data.macro_name}`);
-                    data.results.forEach(result => {
-                        addToOutput(`Команда: ${result.command}`);
-                        if (result.success) {
-                            addToOutput(`Результат:\n${result.result}`);
-                        } else {
-                            addToOutput(`Ошибка: ${result.result}`);
-                        }
-                        addToOutput('---');
+                    const container = document.getElementById('portsStatus');
+                    container.innerHTML = '';
+                    
+                    data.ports.forEach(port => {
+                        const item = document.createElement('div');
+                        item.className = `port-status ${port.status.toLowerCase() === 'up' || port.status.toLowerCase() === 'connected' ? 'up' : 'down'}`;
+                        item.innerHTML = `
+                            <span><strong>${port.name}</strong></span>
+                            <span>${port.status} | ${port.speed} | VLAN: ${port.vlan || 'N/A'}</span>
+                        `;
+                        container.appendChild(item);
                     });
                 } else {
                     showError(data.error);
                 }
-            })
-            .catch(error => {
-                showError('Ошибка выполнения макроса: ' + error.message);
-            })
-            .finally(() => {
-                executeMacroBtn.disabled = false;
-                executeMacroBtn.textContent = 'Выполнить макрос';
-            });
+            } catch (error) {
+                showError('Ошибка получения статуса портов: ' + error.message);
+            }
         }
 
-        // Check connection status
-        function checkStatus() {
-            fetch('/api/status')
-                .then(response => response.json())
-                .then(data => {
-                    connected = data.connected;
-                    if (connected) {
-                        statusDiv.textContent = `Подключено к ${data.host}`;
-                        statusDiv.className = 'status connected';
-                        connectBtn.style.display = 'none';
-                        disconnectBtn.style.display = 'inline-block';
-                    } else {
-                        statusDiv.textContent = 'Не подключено';
-                        statusDiv.className = 'status disconnected';
-                        connectBtn.style.display = 'inline-block';
-                        disconnectBtn.style.display = 'none';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error checking status:', error);
+        async function refreshVlanStatus() {
+            if (!isConnected) {
+                showError('Нет подключения к устройству');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/get_vlan_status', {
+                    method: 'POST'
                 });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    const container = document.getElementById('vlanStatus');
+                    container.innerHTML = '';
+                    
+                    data.vlans.forEach(vlan => {
+                        const item = document.createElement('div');
+                        item.className = `vlan-status ${vlan.status.toLowerCase() === 'active' ? 'active' : ''}`;
+                        item.innerHTML = `
+                            <span><strong>VLAN ${vlan.id}</strong> (${vlan.name})</span>
+                            <span>${vlan.status} | Порты: ${vlan.ports.length}</span>
+                        `;
+                        container.appendChild(item);
+                    });
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError('Ошибка получения статуса VLAN: ' + error.message);
+            }
         }
 
-        // Add text to output
-        function addToOutput(text) {
-            output.textContent += text + '\n';
+        function updateConnectionStatus(connected, message) {
+            const indicator = document.getElementById('statusIndicator');
+            const text = document.getElementById('statusText');
+            const connectBtn = document.getElementById('connectBtn');
+            const disconnectBtn = document.getElementById('disconnectBtn');
+
+            if (connected) {
+                indicator.classList.add('connected');
+                text.textContent = message;
+                connectBtn.disabled = true;
+                disconnectBtn.disabled = false;
+            } else {
+                indicator.classList.remove('connected');
+                text.textContent = message;
+                connectBtn.disabled = false;
+                disconnectBtn.disabled = true;
+            }
+        }
+
+        function appendOutput(text) {
+            const output = document.getElementById('outputArea');
+            output.textContent += text;
             output.scrollTop = output.scrollHeight;
         }
 
-        // Show error message
-        function showError(message) {
-            addToOutput(`ОШИБКА: ${message}`);
+        function clearOutput() {
+            document.getElementById('outputArea').textContent = 'Вывод очищен.\n';
         }
 
-        // Modal functions
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+        function exportOutput() {
+            const output = document.getElementById('outputArea').textContent;
+            const blob = new Blob([output], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cisco_output_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showAddCommandModal() {
+            document.getElementById('addCommandModal').style.display = 'block';
+        }
+
+        function showAddMacroModal() {
+            document.getElementById('addMacroModal').style.display = 'block';
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Search commands
-        function searchCommands() {
-            const searchTerm = searchInput.value.trim();
-            if (searchTerm.length < 2) {
-                loadCommands(); // Show category commands if search is too short
-                return;
-            }
-
-            fetch('/api/search_commands', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    search_term: searchTerm
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    commandList.innerHTML = '';
-                    if (data.results.length === 0) {
-                        commandList.innerHTML = '<div class="loading">Команды не найдены</div>';
-                    } else {
-                        data.results.forEach(command => {
-                            const div = document.createElement('div');
-                            div.className = 'command-item';
-                            div.textContent = command.description;
-                            div.dataset.command = command.command;
-                            div.dataset.category = command.category;
-                            div.addEventListener('click', () => selectCommand(div, command));
-                            commandList.appendChild(div);
-                        });
-                    }
-                } else {
-                    showError('Ошибка поиска: ' + data.error);
-                }
-            })
-            .catch(error => {
-                showError('Ошибка поиска: ' + error.message);
-            });
-        }
-
-        // Open add command modal
-        function openAddCommandModal() {
-            // Populate categories in modal
-            const commandCategory = document.getElementById('commandCategory');
-            commandCategory.innerHTML = '<option value="">Выберите категорию</option>';
-            
-            fetch('/api/categories')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        data.categories.forEach(category => {
-                            const option = document.createElement('option');
-                            option.value = category;
-                            option.textContent = category;
-                            commandCategory.appendChild(option);
-                        });
-                    }
-                });
-
-            // Clear form
-            document.getElementById('commandText').value = '';
-            document.getElementById('commandDescription').value = '';
-            
-            openModal('addCommandModal');
-        }
-
-        // Save command
-        function saveCommand() {
-            const category = document.getElementById('commandCategory').value;
-            const command = document.getElementById('commandText').value.trim();
-            const description = document.getElementById('commandDescription').value.trim();
+        async function addCommand() {
+            const category = document.getElementById('newCommandCategory').value.trim();
+            const command = document.getElementById('newCommandText').value.trim();
+            const description = document.getElementById('newCommandDescription').value.trim();
 
             if (!category || !command || !description) {
                 showError('Заполните все поля');
                 return;
             }
 
-            fetch('/api/add_command', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    category: category,
-                    command: command,
-                    description: description
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
-                    closeModal('addCommandModal');
-                    if (categorySelect.value === category) {
-                        loadCommands(); // Reload commands if same category is selected
-                    }
-                } else {
-                    showError(data.error);
-                }
-            })
-            .catch(error => {
-                showError('Ошибка добавления команды: ' + error.message);
-            });
-        }
-
-        // Remove selected command
-        function removeSelectedCommand() {
-            if (!selectedCommand) {
-                showError('Выберите команду для удаления');
-                return;
-            }
-
-            if (confirm(`Удалить команду "${selectedCommand.description}"?`)) {
-                const category = selectedCommand.category || categorySelect.value;
-                
-                fetch('/api/remove_command', {
+            try {
+                const response = await fetch('/api/add_command', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         category: category,
-                        command: selectedCommand.command
+                        command: command,
+                        description: description
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
-                        selectedCommand = null;
-                        removeCommandBtn.disabled = true;
-                        executeBtn.disabled = true;
-                        loadCommands(); // Reload commands
-                    } else {
-                        showError(data.error);
-                    }
-                })
-                .catch(error => {
-                    showError('Ошибка удаления команды: ' + error.message);
                 });
-            }
-        }
 
-        // Open macro modal
-        function openMacroModal(isEdit = false) {
-            editingMacro = isEdit ? selectedMacro : null;
-            currentMacroCommands = [];
-
-            if (isEdit && selectedMacro) {
-                document.getElementById('macroModalTitle').textContent = 'Редактировать макрос';
-                document.getElementById('macroName').value = selectedMacro.macro.name;
-                document.getElementById('macroDescription').value = selectedMacro.macro.description;
-                currentMacroCommands = [...selectedMacro.macro.commands];
-            } else {
-                document.getElementById('macroModalTitle').textContent = 'Создать макрос';
-                document.getElementById('macroName').value = '';
-                document.getElementById('macroDescription').value = '';
-                currentMacroCommands = [];
-            }
-
-            updateMacroCommandsList();
-            openModal('macroModal');
-        }
-
-        // Add command to macro
-        function addMacroCommand() {
-            const commandInput = document.getElementById('newMacroCommand');
-            const command = commandInput.value.trim();
-            
-            if (command) {
-                currentMacroCommands.push(command);
-                commandInput.value = '';
-                updateMacroCommandsList();
-            }
-        }
-
-        // Update macro commands list
-        function updateMacroCommandsList() {
-            const container = document.getElementById('macroCommands');
-            container.innerHTML = '';
-
-            currentMacroCommands.forEach((command, index) => {
-                const div = document.createElement('div');
-                div.className = 'command-input';
-                div.innerHTML = `
-                    <input type="text" value="${command}" onchange="updateMacroCommand(${index}, this.value)">
-                    <button onclick="removeMacroCommand(${index})">Удалить</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Update macro command
-        function updateMacroCommand(index, newValue) {
-            currentMacroCommands[index] = newValue;
-        }
-
-        // Remove macro command
-        function removeMacroCommand(index) {
-            currentMacroCommands.splice(index, 1);
-            updateMacroCommandsList();
-        }
-
-        // Save macro
-        function saveMacro() {
-            const name = document.getElementById('macroName').value.trim();
-            const description = document.getElementById('macroDescription').value.trim();
-
-            if (!name || !description || currentMacroCommands.length === 0) {
-                showError('Заполните все поля и добавьте хотя бы одну команду');
-                return;
-            }
-
-            const endpoint = editingMacro ? '/api/update_macro' : '/api/add_macro';
-            const requestData = {
-                name: name,
-                description: description,
-                commands: currentMacroCommands
-            };
-
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => response.json())
-            .then(data => {
+                const data = await response.json();
+                
                 if (data.success) {
-                    addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
-                    closeModal('macroModal');
-                    loadMacros(); // Reload macros
+                    showSuccess(data.message);
+                    closeModal('addCommandModal');
+                    loadCategories();
+                    
+                    // Clear form
+                    document.getElementById('newCommandCategory').value = '';
+                    document.getElementById('newCommandText').value = '';
+                    document.getElementById('newCommandDescription').value = '';
                 } else {
                     showError(data.error);
                 }
-            })
-            .catch(error => {
-                showError('Ошибка сохранения макроса: ' + error.message);
-            });
+            } catch (error) {
+                showError('Ошибка добавления команды: ' + error.message);
+            }
         }
 
-        // Delete selected macro
-        function deleteSelectedMacro() {
-            if (!selectedMacro) {
-                showError('Выберите макрос для удаления');
+        async function addMacro() {
+            const name = document.getElementById('newMacroName').value.trim();
+            const description = document.getElementById('newMacroDescription').value.trim();
+            const commandsText = document.getElementById('newMacroCommands').value.trim();
+
+            if (!name || !description || !commandsText) {
+                showError('Заполните все поля');
                 return;
             }
 
-            if (confirm(`Удалить макрос "${selectedMacro.macro.name}"?`)) {
-                fetch('/api/delete_macro', {
+            const commands = commandsText.split('\n').map(cmd => cmd.trim()).filter(cmd => cmd);
+
+            try {
+                const response = await fetch('/api/add_macro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        name: selectedMacro.key
+                        name: name,
+                        description: description,
+                        commands: commands,
+                        author: 'user'
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        addToOutput(`[${new Date().toLocaleTimeString()}] ${data.message}`);
-                        selectedMacro = null;
-                        editMacroBtn.disabled = true;
-                        deleteMacroBtn.disabled = true;
-                        executeMacroBtn.disabled = true;
-                        loadMacros(); // Reload macros
-                    } else {
-                        showError(data.error);
-                    }
-                })
-                .catch(error => {
-                    showError('Ошибка удаления макроса: ' + error.message);
                 });
-            }
-        }
 
-        // Refresh ports status
-        function refreshPortsStatus() {
-            if (!connected) {
-                showError('Подключитесь к устройству');
-                return;
-            }
-
-            document.getElementById('refreshPortsBtn').disabled = true;
-            document.getElementById('refreshPortsBtn').textContent = 'Обновление...';
-
-            fetch('/api/get_ports_status', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
+                const data = await response.json();
+                
                 if (data.success) {
-                    displayPortsStatus(data.ports);
+                    showSuccess(data.message);
+                    closeModal('addMacroModal');
+                    loadMacros();
+                    
+                    // Clear form
+                    document.getElementById('newMacroName').value = '';
+                    document.getElementById('newMacroDescription').value = '';
+                    document.getElementById('newMacroCommands').value = '';
                 } else {
-                    showError('Ошибка получения данных о портах: ' + data.error);
+                    showError(data.error);
                 }
-            })
-            .catch(error => {
-                showError('Ошибка получения данных о портах: ' + error.message);
-            })
-            .finally(() => {
-                document.getElementById('refreshPortsBtn').disabled = false;
-                document.getElementById('refreshPortsBtn').textContent = 'Обновить данные';
-            });
+            } catch (error) {
+                showError('Ошибка создания макроса: ' + error.message);
+            }
         }
 
-        // Display ports status
-        function displayPortsStatus(ports) {
-            const container = document.getElementById('portsContainer');
-            container.innerHTML = '';
-
-            if (ports.length === 0) {
-                container.innerHTML = '<div class="loading">Порты не найдены</div>';
-                return;
+        async function checkStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                isConnected = data.connected;
+                updateConnectionStatus(data.connected, data.connected ? `Подключено к ${data.host}` : 'Не подключено');
+                
+                // Update button states
+                if (selectedCommand) document.getElementById('executeBtn').disabled = !isConnected;
+                if (selectedMacro) document.getElementById('executeMacroBtn').disabled = !isConnected;
+            } catch (error) {
+                console.error('Ошибка проверки статуса:', error);
             }
-
-            ports.forEach(port => {
-                const div = document.createElement('div');
-                div.className = `port-status ${port.status.toLowerCase()}`;
-                div.innerHTML = `
-                    <div style="font-weight: bold;">${port.name}</div>
-                    <div>Статус: ${port.status}</div>
-                    <div>Скорость: ${port.speed || 'N/A'}</div>
-                    <div>Дуплекс: ${port.duplex || 'N/A'}</div>
-                    ${port.vlan ? `<div>VLAN: ${port.vlan}</div>` : ''}
-                `;
-                container.appendChild(div);
-            });
         }
 
-        // Refresh VLAN status
-        function refreshVlanStatus() {
-            if (!connected) {
-                showError('Подключитесь к устройству');
-                return;
-            }
+        function showSuccess(message) {
+            const alert = document.getElementById('successAlert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
 
-            document.getElementById('refreshVlanBtn').disabled = true;
-            document.getElementById('refreshVlanBtn').textContent = 'Обновление...';
+        function showError(message) {
+            const alert = document.getElementById('errorAlert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
 
-            fetch('/api/get_vlan_status', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    displayVlanStatus(data.vlans);
-                } else {
-                    showError('Ошибка получения данных о VLAN: ' + data.error);
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
                 }
-            })
-            .catch(error => {
-                showError('Ошибка получения данных о VLAN: ' + error.message);
-            })
-            .finally(() => {
-                document.getElementById('refreshVlanBtn').disabled = false;
-                document.getElementById('refreshVlanBtn').textContent = 'Обновить VLAN';
             });
         }
 
-        // Display VLAN status
-        function displayVlanStatus(vlans) {
-            const container = document.getElementById('vlanContainer');
-            container.innerHTML = '';
-
-            if (vlans.length === 0) {
-                container.innerHTML = '<div class="loading">VLAN не найдены</div>';
-                return;
-            }
-
-            vlans.forEach(vlan => {
-                const div = document.createElement('div');
-                div.className = 'vlan-item';
-                div.innerHTML = `
-                    <div style="font-weight: bold;">VLAN ${vlan.id}</div>
-                    <div>Название: ${vlan.name}</div>
-                    <div>Статус: ${vlan.status}</div>
-                    <div>Порты: ${vlan.ports.join(', ')}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Toggle auto refresh
-        function toggleAutoRefresh() {
-            const btn = document.getElementById('autoRefreshBtn');
-            
-            if (autoRefreshInterval) {
-                clearInterval(autoRefreshInterval);
-                autoRefreshInterval = null;
-                btn.textContent = 'Авто-обновление';
-                btn.classList.remove('active');
-            } else {
-                autoRefreshInterval = setInterval(() => {
-                    if (connected && document.getElementById('monitoringTab').classList.contains('active')) {
-                        refreshPortsStatus();
-                        refreshVlanStatus();
-                    }
-                }, 30000); // Update every 30 seconds
-                btn.textContent = 'Остановить авто-обновление';
-                btn.classList.add('active');
-            }
-        }
+        // Check status periodically
+        setInterval(checkStatus, 30000);
     </script>
 </body>
 </html>
